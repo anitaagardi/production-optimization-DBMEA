@@ -15,9 +15,9 @@ export class BenchmarkReader {
     /**
       * Reads one benchmark data
       */
-    public readOne() {
+    public readOne(benchmarkFile) {
 
-        var data = fs.readFileSync(ONE_BENCHMARK);
+        var data = fs.readFileSync(benchmarkFile);
 
         let inputDataRows: string[] = data.toString().split("\n");
         let numberOfMachines, numberOfJobs;

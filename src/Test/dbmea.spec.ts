@@ -1,3 +1,4 @@
+import { ONE_BENCHMARK } from "../constants";
 import { dbmea } from "../DBMEA/dbmea";
 import { bacterialMutation } from "../DBMEA/Operators/Bacterial_Mutation/bacterialMutation";
 import { coherentSegmentMutation } from "../DBMEA/Operators/Bacterial_Mutation/coherentSegmentMutation";
@@ -6,6 +7,7 @@ import { geneTransfer } from "../DBMEA/Operators/Gene_Transfer/geneTransfer";
 import { geneTransferMutation } from "../DBMEA/Operators/Gene_Transfer/geneTransferMutation";
 import { threeOpt } from "../DBMEA/Operators/threeOpt";
 import { all_segments, twoOpt } from "../DBMEA/Operators/twoOpt";
+import { BenchmarkReader } from "../File/BenchmarkReader";
 import { Solution } from "../Model/solution";
 import { isPermutation } from "./isPermutation";
 import { mockPermutationPopulation, mockSolutionPopulation } from "./mockData";
@@ -13,6 +15,8 @@ import { mockPermutationPopulation, mockSolutionPopulation } from "./mockData";
 
 console.log = jest.fn();
 test('twoOpt test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solution: Solution = mockSolutionPopulation()[0];
     let twoOptResult: Solution = twoOpt(solution);
     let isTwoOptResultPermutation: boolean = isPermutation(twoOptResult.permutation);
@@ -20,6 +24,8 @@ test('twoOpt test - is permutation?', () => {
 
 });
 test('threeOpt test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solution: Solution = mockSolutionPopulation()[0];
     let threeOptResultSolution: Solution = threeOpt(solution);
     let isThreeOptResultPermutation: boolean = isPermutation(threeOptResultSolution.permutation);
@@ -27,12 +33,16 @@ test('threeOpt test - is permutation?', () => {
 
 });
 test('coherent segment mutation operator test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solution: Solution = mockSolutionPopulation()[0];
     let coherentSegmentResultSolution: Solution = coherentSegmentMutation(solution, 1, 4, 3);
     let isCoherentSegmentResultPermutation: boolean = isPermutation(coherentSegmentResultSolution.permutation);
     expect(isCoherentSegmentResultPermutation).toBe(true);
 });
 test('loose segment mutation operator test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solution: Solution = mockSolutionPopulation()[0];
     let looseSegmentResultSolution: Solution = looseSegmentMutation(solution, 1, 4);
     let isLooseSegmentResultPermutation: boolean = isPermutation(looseSegmentResultSolution.permutation);
@@ -40,6 +50,8 @@ test('loose segment mutation operator test - is permutation?', () => {
 });
 
 test('bacterial mutation test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solutions: Solution[] = mockSolutionPopulation();
     let bacterialMutationResultSolutions: Solution[] = bacterialMutation(solutions, 10, 4);
     bacterialMutationResultSolutions.map((bacterialSolution) => {
@@ -58,6 +70,8 @@ test('gene transfer mutation test - is permutation?', () => {
 
 
 test('gene transfer test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let solutions: Solution[] = mockSolutionPopulation();
     let geneTransferResultSolutions: Solution[] = geneTransfer(solutions, 10, 4);
     geneTransferResultSolutions.map((geneTransferSolution) => {
@@ -67,6 +81,8 @@ test('gene transfer test - is permutation?', () => {
 
 });
 test('dbmea test - is permutation?', () => {
+    Solution.benchmarkReader = new BenchmarkReader();
+    Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let dbmeaResultSolution: Solution = dbmea(10, 10, 10, 10, 3, 3);
     let isDBMEAResultSolutionPermutation: boolean = isPermutation(dbmeaResultSolution.permutation);
     expect(isDBMEAResultSolutionPermutation).toBe(true);

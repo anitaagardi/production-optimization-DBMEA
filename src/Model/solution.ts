@@ -8,11 +8,6 @@ export class Solution {
     fitnessValue: number = Number.MAX_SAFE_INTEGER;
     static benchmarkReader: BenchmarkReader = null;
     constructor(permutation?: number[]) {
-        if (Solution.benchmarkReader == null) {
-            Solution.benchmarkReader = new BenchmarkReader();
-            Solution.benchmarkReader.readOne();
-            Solution.benchmarkReader.jobs;
-        }
         if (permutation) {
             this.permutation = permutation;
         }
