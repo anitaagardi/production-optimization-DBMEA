@@ -12,7 +12,6 @@ import { Solution } from "../Model/solution";
 import { isPermutation } from "./isPermutation";
 import { mockPermutationPopulation, mockSolutionPopulation } from "./mockData";
 
-
 console.log = jest.fn();
 test('twoOpt test - is permutation?', () => {
     Solution.benchmarkReader = new BenchmarkReader();
@@ -23,6 +22,7 @@ test('twoOpt test - is permutation?', () => {
     expect(isTwoOptResultPermutation).toBe(true);
 
 });
+
 test('threeOpt test - is permutation?', () => {
     Solution.benchmarkReader = new BenchmarkReader();
     Solution.benchmarkReader.readOne(ONE_BENCHMARK);
@@ -32,6 +32,7 @@ test('threeOpt test - is permutation?', () => {
     expect(isThreeOptResultPermutation).toBe(true);
 
 });
+
 test('coherent segment mutation operator test - is permutation?', () => {
     Solution.benchmarkReader = new BenchmarkReader();
     Solution.benchmarkReader.readOne(ONE_BENCHMARK);
@@ -40,6 +41,7 @@ test('coherent segment mutation operator test - is permutation?', () => {
     let isCoherentSegmentResultPermutation: boolean = isPermutation(coherentSegmentResultSolution.permutation);
     expect(isCoherentSegmentResultPermutation).toBe(true);
 });
+
 test('loose segment mutation operator test - is permutation?', () => {
     Solution.benchmarkReader = new BenchmarkReader();
     Solution.benchmarkReader.readOne(ONE_BENCHMARK);
@@ -78,16 +80,14 @@ test('gene transfer test - is permutation?', () => {
         let isGeneTransferResultPermutation: boolean = isPermutation(geneTransferSolution.permutation);
         expect(isGeneTransferResultPermutation).toBe(true);
     })
-
 });
+
 test('dbmea test - is permutation?', () => {
     Solution.benchmarkReader = new BenchmarkReader();
     Solution.benchmarkReader.readOne(ONE_BENCHMARK);
     let dbmeaResultSolution: Solution = dbmea(10, 10, 10, 10, 3, 3);
     let isDBMEAResultSolutionPermutation: boolean = isPermutation(dbmeaResultSolution.permutation);
     expect(isDBMEAResultSolutionPermutation).toBe(true);
-
-
 });
 
 
