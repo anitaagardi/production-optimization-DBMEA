@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { readdirSync, statSync } from 'fs';
 import { BENCHMARK_RESULTS_PATH } from "../constants";
+import { Utils } from './util';
 
 /**
  * Reads the benchmark results into one structure
@@ -13,7 +14,7 @@ export class BenchmarkResultsReader {
     public readAll() {
         const benchmarkResults = [];
 
-        const files = this.getAllFiles(BENCHMARK_RESULTS_PATH, []);
+        const files = Utils.getAllFiles(BENCHMARK_RESULTS_PATH, []);
         for (const file of files) {
             var fileData = fs.readFileSync(file);
 
@@ -26,26 +27,6 @@ export class BenchmarkResultsReader {
         }
 
         return benchmarkResults;
-    }
-
-    /**
-     * Gets all the files recursivelly from a path
-     * @param dir starting directory
-     */
-    private getAllFiles(dirPath, arrayOfFiles) {
-        let files = fs.readdirSync(dirPath);
-
-        arrayOfFiles = arrayOfFiles || [];
-
-        files.forEach(file => {
-            if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-                arrayOfFiles = this.getAllFiles(dirPath + "/" + file, arrayOfFiles);
-            } else {
-                arrayOfFiles.push(dirPath + "/" + file);
-            }
-        })
-
-        return arrayOfFiles;
     }
 
     /**
