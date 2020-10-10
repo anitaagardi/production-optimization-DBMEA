@@ -2,7 +2,6 @@ import { Job } from "../Model/job";
 import { Machine } from "../Model/machine";
 
 import * as fs from 'fs';
-import { ONE_BENCHMARK } from "../constants";
 /**
  * Reads the benchmark dataset
 * @property {Job[]} jobs - the jobs, which contains the benchmark dataset

@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import { readdirSync, statSync } from 'fs';
 import { BENCHMARK_RESULTS_PATH } from "../constants";
 import { Utils } from './util';
 
