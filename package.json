@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --target ES5 src/main.ts --outDir dist",
+    "build": "tsc --target ES5 --sourceMap src/main.ts --outDir dist",
     "start": "npm run build && node dist/main.js"
   },
   "repository": {
