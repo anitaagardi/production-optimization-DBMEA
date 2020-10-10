@@ -2,7 +2,7 @@ import { Job } from "../Model/job";
 import { Machine } from "../Model/machine";
 
 import * as fs from 'fs';
-import { INPUT_PATH } from "../constants";
+import { ONE_BENCHMARK } from "../constants";
 /**
  * Reads the benchmark dataset
 * @property {Job[]} jobs - the jobs, which contains the benchmark dataset
@@ -13,11 +13,11 @@ export class BenchmarkReader {
     jobs: Job[] = [];
     machines: Machine[] = [];
     /**
-      * Reads the benchmark data
+      * Reads one benchmark data
       */
-    public readData() {
+    public readOne() {
 
-        var data = fs.readFileSync(INPUT_PATH);
+        var data = fs.readFileSync(ONE_BENCHMARK);
 
         let inputDataRows: string[] = data.toString().split("\n");
         let numberOfMachines, numberOfJobs;

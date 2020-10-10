@@ -10,7 +10,7 @@ export class Solution {
     constructor(permutation?: number[]) {
         if (Solution.benchmarkReader == null) {
             Solution.benchmarkReader = new BenchmarkReader();
-            Solution.benchmarkReader.readData();
+            Solution.benchmarkReader.readOne();
             Solution.benchmarkReader.jobs;
         }
         if (permutation) {
