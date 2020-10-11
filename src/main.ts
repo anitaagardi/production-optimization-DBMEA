@@ -1,6 +1,6 @@
 import { BENCHMARKS_INSTANCES_PATH, ONE_BENCHMARK } from "./constants";
 import { dbmea } from "./DBMEA/dbmea";
-import { BenchmarkReader } from "./File/BenchmarkReader";
+import { BenchmarkReader } from "./File/benchmarkReader";
 import { BenchmarkResultsReader } from "./File/benchmarkResultsReader";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
@@ -13,12 +13,12 @@ console.log("number of benchmarks: ", files.length);
 const RESULTS_FILE = "results/all_benchmarks.txt";
 
 const hyperParameters = {
-    population: [30, 50],
-    terminationCriteria: [3, 5],
-    clones: [2, 3, 4],
-    infections: [40, 20, 30],
-    segmentLengths: [4, 2, 6, 8],
-    transferSegmentLengths: [4, 2, 3]
+    population: [30],
+    terminationCriteria: [3],
+    clones: [3, 4],
+    infections: [40, 30],
+    segmentLengths: [2, 4],
+    transferSegmentLengths: [3, 4]
 }
 
 const parameterIndexes = [
