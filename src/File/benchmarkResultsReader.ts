@@ -33,7 +33,7 @@ export class BenchmarkResultsReader {
      * @param results preloaded optimum vector
      * @param currentBenchMarkName current benchmark name
      */
-    readOptimum(results: any[], currentBenchMarkName: string) {
+    findOptimum(results: any[], currentBenchMarkName: string) {
         for (const result of results) {
             if (result[0] == '"' + currentBenchMarkName + '"') {
                 return result[1];

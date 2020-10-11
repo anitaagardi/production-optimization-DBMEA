@@ -12,26 +12,70 @@ console.log("number of benchmarks: ", files.length);
 
 const RESULTS_FILE = "results/all_benchmarks.txt";
 
+const hyperParameters = {
+    population: [30, 50],
+    terminationCriteria: [3, 5],
+    clones: [2, 3, 4],
+    infections: [40, 20, 30],
+    segmentLengths: [4, 2, 6, 8],
+    transferSegmentLengths: [4, 2, 3]
+}
+
+const parameterIndexes = [
+    Array.from(Array(hyperParameters.population.length), (v, i) => i),
+    Array.from(Array(hyperParameters.terminationCriteria.length), (v, i) => i),
+    Array.from(Array(hyperParameters.clones.length), (v, i) => i),
+    Array.from(Array(hyperParameters.infections.length), (v, i) => i),
+    Array.from(Array(hyperParameters.segmentLengths.length), (v, i) => i),
+    Array.from(Array(hyperParameters.transferSegmentLengths.length), (v, i) => i)
+];
+
+const permutations = Utils.combineArraysRecursively(parameterIndexes);
+
+const benchMarkResults = new BenchmarkResultsReader;
+const results = benchMarkResults.readAll();
+
 for (const file of files) {
     console.log(file)
     Solution.benchmarkReader = new BenchmarkReader();
     Solution.benchmarkReader.readOne(file);
 
-    let dbmeaResultSolution: Solution = dbmea(100, 3, 2, 40, 4, 4);
-
-    const optimum = dbmeaResultSolution.fitness();
-    console.log("calculated optimum:", optimum);
-
-    const benchMarkResults = new BenchmarkResultsReader;
-    const results = benchMarkResults.readAll();
-
     const currentBenchMarkName = file.substring(file.lastIndexOf('/') + 1, file.lastIndexOf('.'));
-    const benchmarkOptimum = benchMarkResults.readOptimum(results, currentBenchMarkName);
-    if(benchmarkOptimum > optimum)
-    {
-        fs.appendFileSync(RESULTS_FILE, "better found");
-        console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    const benchmarkOptimum = benchMarkResults.findOptimum(results, currentBenchMarkName);
+    
+    let optimum;
+    let bestOptimum = 1000000;
+
+    for (let i = 0; i < permutations.length; i++) {
+        const population = hyperParameters.population[permutations[i][0]];
+        const terminationCriteria = hyperParameters.terminationCriteria[permutations[i][1]];
+        const clone = hyperParameters.clones[permutations[i][2]];
+        const infection = hyperParameters.infections[permutations[i][3]];
+        const segmentLength = hyperParameters.segmentLengths[permutations[i][4]];
+        const transferSegmentLength = hyperParameters.transferSegmentLengths[permutations[i][5]];
+
+        const startTime = process.hrtime();
+        
+        let dbmeaResultSolution: Solution = dbmea(population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
+
+        optimum = dbmeaResultSolution.fitness();
+
+        const ellapsedTime = process.hrtime(startTime);
+
+        if (bestOptimum > optimum) {
+            bestOptimum = optimum;
+        }
+        console.log("parameters: ", population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
+        console.log("calculated optimum [" + i + "]: " + optimum + " benchmark optimum: " + benchmarkOptimum + " [" + ellapsedTime[0] + " sec]");
+        if (benchmarkOptimum > optimum) {
+            fs.appendFileSync(RESULTS_FILE, "optimum found");
+            console.log("optimum found ****************************************************");        
+        }
+        if (benchmarkOptimum > optimum) {
+            fs.appendFileSync(RESULTS_FILE, "better found");
+            console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
     }
-    console.log("benchmark optimum:", benchmarkOptimum);
-    fs.appendFileSync(RESULTS_FILE, file + ": " + optimum + " " + benchmarkOptimum + "\n");
+
+    fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + "\n");
 }
