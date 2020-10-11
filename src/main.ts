@@ -13,12 +13,12 @@ console.log("number of benchmarks: ", files.length);
 const RESULTS_FILE = "results/all_benchmarks.txt";
 
 const hyperParameters = {
-    population: [30],
+    population: [50],
     terminationCriteria: [3],
-    clones: [3, 4],
-    infections: [40, 30],
-    segmentLengths: [2, 4],
-    transferSegmentLengths: [3, 4]
+    clones: [5, 6],
+    infections: [40, 10],
+    segmentLengths: [4, 6],
+    transferSegmentLengths: [5, 6]
 }
 
 const parameterIndexes = [
