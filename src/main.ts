@@ -68,11 +68,11 @@ for (const file of files) {
         console.log("parameters: ", population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
         console.log("calculated optimum [" + i + "]: " + optimum + " benchmark optimum: " + benchmarkOptimum + " [" + ellapsedTime[0] + " sec]");
         if (benchmarkOptimum > optimum) {
-            fs.appendFileSync(RESULTS_FILE, "optimum found ****************************************************");");
+            fs.appendFileSync(RESULTS_FILE, "optimum found ****************************************************");
             console.log("optimum found ****************************************************");        
         }
         if (benchmarkOptimum > optimum) {
-            fs.appendFileSync(RESULTS_FILE, "better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");");
+            fs.appendFileSync(RESULTS_FILE, "better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
