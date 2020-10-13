@@ -1,5 +1,5 @@
-import * as seedrandom from "seedrandom";
 import { Solution } from "../../../Model/solution";
+import { globalRandomGenerator } from "../../Permutation/permutationGenerator";
 import { geneTransferMutation } from "./geneTransferMutation";
 /**
  * The gene transfer operator, returns the gene transferred population
@@ -19,11 +19,10 @@ export function geneTransfer(population: Solution[], n_inf: number, i_trans: num
     let geneTransferrredPopulation: Solution[] = [];
     //gene transfer n_inf times
     for (let i = 0; i < n_inf; i++) {
-        let rng = seedrandom('hello.')
         //the gene transfer mutation based on the randomly selected superior and inferior bacterien
-        let randomSuperiorBacterium: Solution = superiorPopulation[Math.floor(rng() * superiorPopulation.length)];
-        let randomInferiorBacterium: Solution = inferiorPopulation[Math.floor(rng() * inferiorPopulation.length)];
-        geneTransferrredPopulation.push(geneTransferMutation(randomSuperiorBacterium, randomInferiorBacterium, Math.floor(rng() * randomInferiorBacterium.permutation.length), i_trans, Math.floor(rng() * randomInferiorBacterium.permutation.length)));
+        let randomSuperiorBacterium: Solution = superiorPopulation[Math.floor(globalRandomGenerator() * superiorPopulation.length)];
+        let randomInferiorBacterium: Solution = inferiorPopulation[Math.floor(globalRandomGenerator() * inferiorPopulation.length)];
+        geneTransferrredPopulation.push(geneTransferMutation(randomSuperiorBacterium, randomInferiorBacterium, Math.floor(globalRandomGenerator() * randomInferiorBacterium.permutation.length), i_trans, Math.floor(globalRandomGenerator() * randomInferiorBacterium.permutation.length)));
     }
     //push the created gene transferred population into the sorted population
     geneTransferrredPopulation.map((geneTransferrredPermutation) => {
