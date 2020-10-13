@@ -1,5 +1,6 @@
 import * as seedrandom from "seedrandom";
 import { BenchmarkReader } from "../../File/benchmarkReader";
+let rng = seedrandom('hello.');
 /**
  * Generation a permutation with size length 
  * @param {number} size the length of the permutation
@@ -8,7 +9,7 @@ import { BenchmarkReader } from "../../File/benchmarkReader";
 export function permutationGenerator(size: number): number[] {
     let randomNumbers: number[] = [];
     let permutation: number[] = [];
-    let rng = seedrandom('hello.')
+    
     //create random numbers
     for (let i = 0; i < size; i++) {
         randomNumbers[i] = rng();
