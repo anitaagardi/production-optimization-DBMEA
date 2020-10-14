@@ -31,6 +31,7 @@ export function dbmea(n_ind: number, termination_criteria: number, n_clones: num
     let bestSolution: Solution = new Solution([...population[0].permutation]);
     let bestSolutionFitness: number = bestSolution.fitness();
     let notImprovedCount: number = 0;
+    const bestSoultions: Solution[] = [];
     //termination criteria
     while (notImprovedCount < termination_criteria) {
         //bacterial mutation
@@ -45,6 +46,7 @@ export function dbmea(n_ind: number, termination_criteria: number, n_clones: num
         //the gene transfer sorts the population, so the first element will be the best
         let firstSolutionFitness: number = population[0].fitness();
         if (firstSolutionFitness < bestSolutionFitness) {
+            process.stdout.write(bestSolutionFitness + " ");
             bestSolutionFitness = firstSolutionFitness;
             bestSolution.permutation = [...population[0].permutation];
             notImprovedCount = 0;
@@ -53,6 +55,7 @@ export function dbmea(n_ind: number, termination_criteria: number, n_clones: num
         }
 
     }
+    process.stdout.write("\n");
     return bestSolution;
 
 }

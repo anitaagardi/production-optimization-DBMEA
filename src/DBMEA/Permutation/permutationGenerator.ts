@@ -2,6 +2,11 @@ import * as seedrandom from "seedrandom";
 import { BenchmarkReader } from "../../File/benchmarkReader";
 
 export let globalRandomGenerator = seedrandom('startSeed');
+
+export function resetSeed() {
+    globalRandomGenerator = seedrandom('startSeed');
+}
+
 /**
  * Generation a permutation with size length 
  * @param {number} size the length of the permutation

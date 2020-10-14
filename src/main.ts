@@ -5,6 +5,7 @@ import { BenchmarkResultsReader } from "./File/benchmarkResultsReader";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
+import { resetSeed } from "./DBMEA/Permutation/permutationGenerator";
 
 const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH, []);
 
@@ -45,8 +46,10 @@ for (const file of files) {
     
     let optimum;
     let bestOptimum = 1000000;
-
+        
     for (let i = 0; i < permutations.length; i++) {
+        resetSeed();
+
         const population = hyperParameters.population[permutations[i][0]];
         const terminationCriteria = hyperParameters.terminationCriteria[permutations[i][1]];
         const clone = hyperParameters.clones[permutations[i][2]];
