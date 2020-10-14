@@ -15,7 +15,7 @@ const RESULTS_FILE = "results/all_benchmarks.txt";
 
 const hyperParameters = {
     population: [50],
-    terminationCriteria: [3],
+    terminationCriteria: [5],
     clones: [5, 6],
     infections: [20, 10],
     segmentLengths: [4, 6],
@@ -70,13 +70,13 @@ for (const file of files) {
         if (bestOptimum > optimum) {
             bestOptimum = optimum;
         }
+
         console.log("calculated optimum [" + i + "]: " + optimum + " benchmark optimum: " + benchmarkOptimum + " [" + ellapsedTime[0] + " sec]");
-        if (benchmarkOptimum > optimum) {
-            fs.appendFileSync(RESULTS_FILE, "optimum found ****************************************************");
-            console.log("optimum found ****************************************************");        
-        }
+
         if (benchmarkOptimum > optimum) {
             fs.appendFileSync(RESULTS_FILE, "better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            fs.appendFileSync("parameters: ", population + " " + terminationCriteria + " " + clone + " " + infection
+                                + " " + segmentLength + " " +  transferSegmentLength);
             console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
