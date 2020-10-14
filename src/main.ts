@@ -57,6 +57,8 @@ for (const file of files) {
         const segmentLength = hyperParameters.segmentLengths[permutations[i][4]];
         const transferSegmentLength = hyperParameters.transferSegmentLengths[permutations[i][5]];
 
+        console.log("parameters: ", population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
+        
         const startTime = process.hrtime();
         
         let dbmeaResultSolution: Solution = dbmea(population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
@@ -68,7 +70,6 @@ for (const file of files) {
         if (bestOptimum > optimum) {
             bestOptimum = optimum;
         }
-        console.log("parameters: ", population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
         console.log("calculated optimum [" + i + "]: " + optimum + " benchmark optimum: " + benchmarkOptimum + " [" + ellapsedTime[0] + " sec]");
         if (benchmarkOptimum > optimum) {
             fs.appendFileSync(RESULTS_FILE, "optimum found ****************************************************");
