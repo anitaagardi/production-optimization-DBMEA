@@ -14,8 +14,8 @@ console.log("number of benchmarks: ", files.length);
 const RESULTS_FILE = "results/all_benchmarks_ga.txt";
 
 const hyperParameters = {
-    terminationCriteria: [5, 10],
-    population: [50, 100],
+    terminationCriteria: [500, 1000],
+    population: [50, 1000],
     elitism: [5],
     oxRate: [0.3],
     cxRate: [0.3],

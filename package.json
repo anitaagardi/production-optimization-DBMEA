@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --target ES5 --sourceMap src/main_ga.ts --outDir dist",
-    "start": "npm run build && node dist/main_ga.js"
+    "build:ga": "tsc --target ES5 --sourceMap src/main_ga.ts --outDir dist",
+    "start:ga": "npm run build:ga && node dist/main_ga.js",
+    "build:sa": "tsc --target ES5 --sourceMap src/main_sa.ts --outDir dist",
+    "start:sa": "npm run build:sa && node dist/main_sa.js",
+    "build:dbmea": "tsc --target ES5 --sourceMap src/main_dbmea.ts --outDir dist",
+    "start:dbmea": "npm run build:dbmea && node dist/main_dbmea.js"
   },
   "repository": {
     "type": "git",

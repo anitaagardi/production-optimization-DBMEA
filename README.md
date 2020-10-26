@@ -7,13 +7,17 @@ Paper: [TA08] S. Tanaka and M. Araki. A branch-and-bound algorithm with Lagrangi
 
 npm install
 
-Command: npm run start
+Command:
+GA: npm run start:ga
+SA: npm run start:sa
+DBMEA: npm run start:dbmea
 
 Test:
 run all test:
 npm run test
 
+
 The benchmark instances are in the 'benchmark_instances/instances' folder.
 The best known results are in the 'benchmark_instances/results' folder.
-Modify the package.json file in order to switch between the algorithms (main_dbmea.ts, main_ga.ts, main_sa.ts)
+
         

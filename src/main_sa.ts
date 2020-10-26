@@ -14,11 +14,11 @@ console.log("number of benchmarks: ", files.length);
 const RESULTS_FILE = "results/all_benchmarks_sa.txt";
 
 const hyperParameters = {
-    terminationCriteria: [5, 10],
+    terminationCriteria: [5000, 50000],
     temperature: [1000, 5000],
     alpha: [0.1, 0.5],
     length: [5, 10],
-    optNumber: [2, 3] //only 2-opt / 3-opt
+    optNumber: [3, 2] //only 2-opt / 3-opt
 }
 
 const parameterIndexes = [
