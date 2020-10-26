@@ -8,8 +8,11 @@ Paper: [TA08] S. Tanaka and M. Araki. A branch-and-bound algorithm with Lagrangi
 npm install
 
 Command:
+
 GA: npm run start:ga
+ 
 SA: npm run start:sa
+
 DBMEA: npm run start:dbmea
 
 Test:
