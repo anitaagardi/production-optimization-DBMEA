@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --target ES5 --sourceMap src/main.ts --outDir dist",
-    "start": "npm run build && node dist/main.js"
+    "build": "tsc --target ES5 --sourceMap src/main_ga.ts --outDir dist",
+    "start": "npm run build && node dist/main_ga.js"
   },
   "repository": {
     "type": "git",

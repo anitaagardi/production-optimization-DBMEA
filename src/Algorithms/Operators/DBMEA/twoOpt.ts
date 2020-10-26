@@ -1,4 +1,4 @@
-import { Solution } from "../../Model/solution";
+import { Solution } from "../../../Model/solution";
 import { reverseBetween } from "./reverse";
 
 /**

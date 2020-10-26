@@ -1,4 +1,4 @@
-import { Solution } from "../../../Model/solution";
+import { Solution } from "../../../../Model/solution";
 
 /**
  * The gene transfer mutation operator, returns the gene transferred solution

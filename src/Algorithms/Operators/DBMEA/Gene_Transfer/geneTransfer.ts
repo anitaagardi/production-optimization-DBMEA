@@ -1,5 +1,5 @@
-import { Solution } from "../../../Model/solution";
-import { globalRandomGenerator } from "../../Permutation/permutationGenerator";
+import { Solution } from "../../../../Model/solution";
+import { globalRandomGenerator } from "../../../Permutation/permutationGenerator";
 import { geneTransferMutation } from "./geneTransferMutation";
 /**
  * The gene transfer operator, returns the gene transferred population

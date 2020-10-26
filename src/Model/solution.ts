@@ -1,7 +1,7 @@
-import { startPermutationGenerator } from "../DBMEA/Permutation/permutationGenerator";
+import { permutationGenerator, startPermutationGenerator } from "../Algorithms/Permutation/permutationGenerator";
 import { BenchmarkReader } from "../File/benchmarkReader";
 import { Machine } from "./machine";
-import { combinations } from "../DBMEA/Permutation/combination";
+import { combinations } from "../Algorithms/Permutation/combination";
 export class Solution {
     machines: Machine[] = [];
     permutation: number[] = [];
@@ -12,7 +12,8 @@ export class Solution {
             this.permutation = permutation;
         }
         else {
-            this.permutation = startPermutationGenerator(Solution.benchmarkReader);
+
+            this.permutation = permutationGenerator(Solution.benchmarkReader.jobs.length);
         }
 
     }

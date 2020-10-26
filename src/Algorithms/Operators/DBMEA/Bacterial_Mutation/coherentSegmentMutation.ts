@@ -1,5 +1,5 @@
-import { Solution } from "../../../Model/solution";
-import { permutationGenerator } from "../../Permutation/permutationGenerator";
+import { Solution } from "../../../../Model/solution";
+import { permutationGenerator } from "../../../Permutation/permutationGenerator";
 /**
  * the coherent segment mutation operator, returns the best permutation (the result of coherent segment mutation)
  * @param {Solution} solution the permutation (bacterium), which must be mutated

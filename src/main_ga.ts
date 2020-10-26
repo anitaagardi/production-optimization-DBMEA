@@ -1,34 +1,37 @@
 import { BENCHMARKS_INSTANCES_PATH, ONE_BENCHMARK } from "./constants";
-import { dbmea } from "./DBMEA/dbmea";
 import { BenchmarkReader } from "./File/benchmarkReader";
 import { BenchmarkResultsReader } from "./File/benchmarkResultsReader";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
-import { resetSeed } from "./DBMEA/Permutation/permutationGenerator";
+import { resetSeed } from "./Algorithms/Permutation/permutationGenerator";
+import { ga } from "./Algorithms/Optimization/ga";
 
 const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH, []);
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/all_benchmarks.txt";
+const RESULTS_FILE = "results/all_benchmarks_ga.txt";
 
 const hyperParameters = {
-    population: [50],
-    terminationCriteria: [5],
-    clones: [5, 6],
-    infections: [20, 10],
-    segmentLengths: [4, 6],
-    transferSegmentLengths: [5, 6]
+    terminationCriteria: [5, 10],
+    population: [50, 100],
+    elitism: [5],
+    oxRate: [0.3],
+    cxRate: [0.3],
+    pmxRate: [0.3],
+    mutationRate: [0.1]
 }
 
 const parameterIndexes = [
-    Array.from(Array(hyperParameters.population.length), (v, i) => i),
+
     Array.from(Array(hyperParameters.terminationCriteria.length), (v, i) => i),
-    Array.from(Array(hyperParameters.clones.length), (v, i) => i),
-    Array.from(Array(hyperParameters.infections.length), (v, i) => i),
-    Array.from(Array(hyperParameters.segmentLengths.length), (v, i) => i),
-    Array.from(Array(hyperParameters.transferSegmentLengths.length), (v, i) => i)
+    Array.from(Array(hyperParameters.population.length), (v, i) => i),
+    Array.from(Array(hyperParameters.elitism.length), (v, i) => i),
+    Array.from(Array(hyperParameters.oxRate.length), (v, i) => i),
+    Array.from(Array(hyperParameters.cxRate.length), (v, i) => i),
+    Array.from(Array(hyperParameters.pmxRate.length), (v, i) => i),
+    Array.from(Array(hyperParameters.mutationRate.length), (v, i) => i)
 ];
 
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
@@ -43,27 +46,27 @@ for (const file of files) {
 
     const currentBenchMarkName = file.substring(file.lastIndexOf('/') + 1, file.lastIndexOf('.'));
     const benchmarkOptimum = benchMarkResults.findOptimum(results, currentBenchMarkName);
-    
+
     let optimum;
     let bestOptimum = 1000000;
-        
+
     for (let i = 0; i < permutations.length; i++) {
         resetSeed();
+        const terminationCriteria = hyperParameters.terminationCriteria[permutations[i][0]];
+        const population = hyperParameters.population[permutations[i][1]];
+        const elitism = hyperParameters.elitism[permutations[i][2]];
+        const oxRate = hyperParameters.oxRate[permutations[i][3]];
+        const cxRate = hyperParameters.cxRate[permutations[i][4]];
+        const pmxRate = hyperParameters.pmxRate[permutations[i][5]];
+        const mutationRate = hyperParameters.pmxRate[permutations[i][6]];
 
-        const population = hyperParameters.population[permutations[i][0]];
-        const terminationCriteria = hyperParameters.terminationCriteria[permutations[i][1]];
-        const clone = hyperParameters.clones[permutations[i][2]];
-        const infection = hyperParameters.infections[permutations[i][3]];
-        const segmentLength = hyperParameters.segmentLengths[permutations[i][4]];
-        const transferSegmentLength = hyperParameters.transferSegmentLengths[permutations[i][5]];
+        console.log("parameters: ", terminationCriteria, population, elitism, oxRate, cxRate, pmxRate, mutationRate);
 
-        console.log("parameters: ", population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
-        
         const startTime = process.hrtime();
-        
-        let dbmeaResultSolution: Solution = dbmea(population, terminationCriteria, clone, infection, segmentLength, transferSegmentLength);
 
-        optimum = dbmeaResultSolution.fitness();
+        let gaResultSolution: Solution = ga(terminationCriteria, population, elitism, oxRate, cxRate, pmxRate, mutationRate);
+
+        optimum = gaResultSolution.fitness();
 
         const ellapsedTime = process.hrtime(startTime);
 
@@ -75,8 +78,7 @@ for (const file of files) {
 
         if (benchmarkOptimum > optimum) {
             fs.appendFileSync(RESULTS_FILE, "better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            fs.appendFileSync("parameters: ", population + " " + terminationCriteria + " " + clone + " " + infection
-                                + " " + segmentLength + " " +  transferSegmentLength);
+            fs.appendFileSync("parameters: ", terminationCriteria + " " + population + " " + elitism + " " + oxRate + " " + cxRate + " " + pmxRate + " " + mutationRate);
             console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }

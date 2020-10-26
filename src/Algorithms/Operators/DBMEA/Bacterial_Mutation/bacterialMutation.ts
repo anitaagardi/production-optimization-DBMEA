@@ -1,5 +1,5 @@
-import { Solution } from "../../../Model/solution";
-import { globalRandomGenerator } from "../../Permutation/permutationGenerator";
+import { Solution } from "../../../../Model/solution";
+import { globalRandomGenerator } from "../../../Permutation/permutationGenerator";
 import { coherentSegmentMutation } from "./coherentSegmentMutation";
 import { looseSegmentMutation } from "./looseSegmentMutation";
 /**
@@ -11,7 +11,7 @@ import { looseSegmentMutation } from "./looseSegmentMutation";
  */
 export function bacterialMutation(population: Solution[], n_clones: number, i_seg: number): Solution[] {
     for (let i = 0; i < population.length; i++) {
-        
+
         let r = globalRandomGenerator();
 
         if (r <= 0.9) {

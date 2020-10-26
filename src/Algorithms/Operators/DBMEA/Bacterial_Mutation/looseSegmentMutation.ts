@@ -1,5 +1,5 @@
-import { Solution } from "../../../Model/solution";
-import { permutationGenerator } from "../../Permutation/permutationGenerator";
+import { Solution } from "../../../../Model/solution";
+import { permutationGenerator } from "../../../Permutation/permutationGenerator";
 /**
  * The loose segment mutation operator, returns the best permutation (the result of loose segment mutation)
  * @param {Solution} solution the solution (bacterium), which must be mutated

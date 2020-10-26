@@ -1,8 +1,8 @@
-import { Solution } from "../Model/solution";
-import { bacterialMutation } from "./Operators/Bacterial_Mutation/bacterialMutation";
-import { geneTransfer } from "./Operators/Gene_Transfer/geneTransfer";
-import { threeOpt } from "./Operators/threeOpt";
-import { twoOpt } from "./Operators/twoOpt";
+import { Solution } from "../../Model/solution";
+import { bacterialMutation } from "../Operators/DBMEA/Bacterial_Mutation/bacterialMutation";
+import { geneTransfer } from "../Operators/DBMEA/Gene_Transfer/geneTransfer";
+import { threeOpt } from "../Operators/DBMEA/threeOpt";
+import { twoOpt } from "../Operators/DBMEA/twoOpt";
 /**
  * The discrete bacterial memetic evolutionary algorithm (DBMEA)
  * @param {number} n_ind the number of bacteria in the population ie the size of the population
