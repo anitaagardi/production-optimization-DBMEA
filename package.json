@@ -5,12 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build:ga": "tsc --target ES5 --sourceMap src/main_ga.ts --outDir dist",
-    "start:ga": "npm run build:ga && node dist/main_ga.js",
-    "build:sa": "tsc --target ES5 --sourceMap src/main_sa.ts --outDir dist",
-    "start:sa": "npm run build:sa && node dist/main_sa.js",
-    "build:dbmea": "tsc --target ES5 --sourceMap src/main_dbmea.ts --outDir dist",
-    "start:dbmea": "npm run build:dbmea && node dist/main_dbmea.js"
+    "build:ga:tanaka": "tsc --target ES5 --sourceMap src/main_ga_tanaka.ts --outDir dist",
+    "start:ga:tanaka": "npm run build:ga:tanaka && node dist/main_ga_tanaka.js",
+    "build:ga:eric": "tsc --target ES5 --sourceMap src/main_ga_eric.ts --outDir dist",
+    "start:ga:eric": "npm run build:ga:eric && node dist/main_ga_eric.js",
+    "build:sa:tanaka": "tsc --target ES5 --sourceMap src/main_sa_tanaka.ts --outDir dist",
+    "start:sa:tanaka": "npm run build:sa:tanaka && node dist/main_sa_tanaka.js",
+    "build:sa:eric": "tsc --target ES5 --sourceMap src/main_sa_eric.ts --outDir dist",
+    "start:sa:eric": "npm run build:sa:eric && node dist/main_sa_eric.js",
+    "build:dbmea:tanaka": "tsc --target ES5 --sourceMap src/main_dbmea_tanaka.ts --outDir dist",
+    "start:dbmea:tanaka": "npm run build:dbmea:tanaka && node dist/main_dbmea_tanaka.js",
+    "build:dbmea:eric": "tsc --target ES5 --sourceMap src/main_dbmea_eric.ts --outDir dist",
+    "start:dbmea:eric": "npm run build:dbmea:eric && node dist/main_dbmea_eric.js"
   },
   "repository": {
     "type": "git",

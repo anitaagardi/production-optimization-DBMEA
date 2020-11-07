@@ -9,18 +9,33 @@ npm install
 
 Command:
 
-GA: npm run start:ga
- 
-SA: npm run start:sa
+GA:
 
-DBMEA: npm run start:dbmea
+Tanaka: npm run start:ga:tanaka
+
+Eric:npm run start:ga:eric
+ 
+SA:
+
+
+Tanaka: npm run start:sa:tanaka
+
+Eric:npm run start:sa:eric
+
+
+DBMEA:
+
+
+Tanaka: npm run start:dbmea:tanaka
+
+Eric:npm run start:dbmea:eric
 
 Test:
 run all test:
 npm run test
 
 
-The benchmark instances are in the 'benchmark_instances/instances' folder.
-The best known results are in the 'benchmark_instances/results' folder.
+The benchmark instances are in the 'benchmark_instances/Eric'  and 'benchmark_instances/Tanaka' folder.
+The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Eric/results' folder.
 
         

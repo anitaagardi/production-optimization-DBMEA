@@ -1,17 +1,18 @@
-import { BENCHMARKS_INSTANCES_PATH, ONE_BENCHMARK } from "./constants";
-import { BenchmarkReader } from "./File/benchmarkReader";
-import { BenchmarkResultsReader } from "./File/benchmarkResultsReader";
+import { BENCHMARKS_INSTANCES_PATH_TANAKA, ONE_BENCHMARK_TANAKA } from "./constants";
+import { BenchmarkReaderTanaka } from "./File/benchmarkReaderTanaka";
+import { BenchmarkResultsReaderTanaka } from "./File/benchmarkResultsReaderTanaka";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
 import { resetSeed } from "./Algorithms/Permutation/permutationGenerator";
 import { sa } from "./Algorithms/Optimization/sa";
+import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH, []);
+const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TANAKA, []);
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/all_benchmarks_sa.txt";
+const RESULTS_FILE = "results/Tanaka/all_benchmarks_sa.txt";
 
 const hyperParameters = {
     terminationCriteria: [5000, 50000],
@@ -32,13 +33,13 @@ const parameterIndexes = [
 
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
-const benchMarkResults = new BenchmarkResultsReader;
+const benchMarkResults = new BenchmarkResultsReaderTanaka;
 const results = benchMarkResults.readAll();
-
+setBenchmarkType(BENCHMARK_OPTIONS[0]);
 for (const file of files) {
     console.log(file)
-    Solution.benchmarkReader = new BenchmarkReader();
-    Solution.benchmarkReader.readOne(file);
+    Solution.benchmarkReaderTanaka = new BenchmarkReaderTanaka();
+    Solution.benchmarkReaderTanaka.readOne(file);
 
     const currentBenchMarkName = file.substring(file.lastIndexOf('/') + 1, file.lastIndexOf('.'));
     const benchmarkOptimum = benchMarkResults.findOptimum(results, currentBenchMarkName);

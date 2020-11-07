@@ -7,7 +7,7 @@ import * as fs from 'fs';
 * @property {Job[]} jobs - the jobs, which contains the benchmark dataset
 * @property {Machine[]} machines - the machines, which contains the benchmark dataset
 */
-export class BenchmarkReader {
+export class BenchmarkReaderTanaka {
 
     jobs: Job[] = [];
     machines: Machine[] = [];

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
-import { BENCHMARK_RESULTS_PATH } from "../constants";
+import { BENCHMARK_RESULTS_PATH_TANAKA } from "../constants";
 import { Utils } from './util';
 
 /**
  * Reads the benchmark results into one structure
 */
-export class BenchmarkResultsReader {
+export class BenchmarkResultsReaderTanaka {
     /**
      * reads all the benchmark results
      * [instancename, optimal tardiness, calculation time]
@@ -13,7 +13,7 @@ export class BenchmarkResultsReader {
     public readAll() {
         const benchmarkResults = [];
 
-        const files = Utils.getAllFiles(BENCHMARK_RESULTS_PATH, []);
+        const files = Utils.getAllFiles(BENCHMARK_RESULTS_PATH_TANAKA, []);
         for (const file of files) {
             var fileData = fs.readFileSync(file);
 

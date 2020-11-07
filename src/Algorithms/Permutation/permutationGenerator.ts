@@ -1,5 +1,5 @@
 import * as seedrandom from "seedrandom";
-import { BenchmarkReader } from "../../File/benchmarkReader";
+import { BenchmarkReaderTanaka } from "../../File/benchmarkReaderTanaka";
 /**
  * Generates a random number [0,1] with seed
  */
@@ -36,7 +36,7 @@ export function permutationGenerator(size: number): number[] {
  * @param {benchMarkReader} benchMarkReader
  * @returns {number} [0,1,2,3..length]
  */
-export function startPermutationGenerator(benchMarkReader: BenchmarkReader): number[] {
+export function startPermutationGenerator(benchMarkReader: BenchmarkReaderTanaka): number[] {
     let permutation: number[] = [];
 
     // asc order of due dates

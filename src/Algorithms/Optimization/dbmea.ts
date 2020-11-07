@@ -31,7 +31,7 @@ export function dbmea(n_ind: number, termination_criteria: number, n_clones: num
     let bestSolution: Solution = new Solution([...population[0].permutation]);
     let bestSolutionFitness: number = bestSolution.fitness();
     let notImprovedCount: number = 0;
-    const bestSoultions: Solution[] = [];
+
     //termination criteria
     while (notImprovedCount < termination_criteria) {
         //bacterial mutation
