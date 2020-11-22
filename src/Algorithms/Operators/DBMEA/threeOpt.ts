@@ -7,6 +7,7 @@ import { reverseBetween } from "./reverse";
  */
 
 //https://en.wikipedia.org/wiki/3-opt
+
 export function threeOpt(solution: Solution): Solution {
     if (solution.permutation.length < 4) {
         return solution;
@@ -16,7 +17,6 @@ export function threeOpt(solution: Solution): Solution {
         let allSegments: number[][] = all_segments(solution.permutation.length);
         for (let i = 0; i < allSegments.length; i++) {
             delta += reverse_segment_if_better(solution, allSegments[i][0], allSegments[i][1], allSegments[i][3]);
-
         }
         if (delta >= 0) {
             break;

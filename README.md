@@ -13,14 +13,14 @@ GA:
 
 Tanaka: npm run start:ga:tanaka
 
-Eric:npm run start:ga:eric
+Taillard:npm run start:ga:taillard
  
 SA:
 
 
 Tanaka: npm run start:sa:tanaka
 
-Eric:npm run start:sa:eric
+Taillard:npm run start:sa:taillard
 
 
 DBMEA:
@@ -28,14 +28,14 @@ DBMEA:
 
 Tanaka: npm run start:dbmea:tanaka
 
-Eric:npm run start:dbmea:eric
+Taillard:npm run start:dbmea:taillard
 
 Test:
 run all test:
 npm run test
 
 
-The benchmark instances are in the 'benchmark_instances/Eric'  and 'benchmark_instances/Tanaka' folder.
-The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Eric/results' folder.
+The benchmark instances are in the 'benchmark_instances/Taillard'  and 'benchmark_instances/Tanaka' folder.
+The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Taillard/results' folder.
 
         

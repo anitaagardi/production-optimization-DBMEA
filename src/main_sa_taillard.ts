@@ -1,18 +1,18 @@
-import { BENCHMARKS_INSTANCES_PATH_ERIC } from "./constants";
+import { BENCHMARKS_INSTANCES_PATH_TAILLARD } from "./constants";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
 import { resetSeed } from "./Algorithms/Permutation/permutationGenerator";
 import { sa } from "./Algorithms/Optimization/sa";
-import { BenchmarkResultsReaderEric } from "./File/benchmarkResultsReaderEric";
-import { BenchmarkReaderEric } from "./File/benchmarkReaderEric";
+import { BenchmarkResultsReaderTaillard } from "./File/benchmarkResultsReaderTaillard";
+import { BenchmarkReaderTaillard } from "./File/benchmarkReaderTaillard";
 import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_ERIC, []);
+const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/Eric/all_benchmarks_sa.txt";
+const RESULTS_FILE = "results/Taillard/all_benchmarks_sa.txt";
 
 const hyperParameters = {
     terminationCriteria: [5000, 50000],
@@ -21,6 +21,7 @@ const hyperParameters = {
     length: [5, 10],
     optNumber: [3, 2] //only 2-opt / 3-opt
 }
+
 
 
 const parameterIndexes = [
@@ -34,25 +35,25 @@ const parameterIndexes = [
 
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
-const benchMarkResults = new BenchmarkResultsReaderEric;
+const benchMarkResults = new BenchmarkResultsReaderTaillard;
 benchMarkResults.readAll();
 
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
 for (const file of files) {
     let actualBenchmarkInstanceIndex = 0;
     console.log(file)
-    Solution.benchmarkReaderEric = new BenchmarkReaderEric();
-    Solution.benchmarkReaderEric.readTheFile(file);
-    let fileSize: number = Solution.benchmarkReaderEric.getFileSize();
+    Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
+    Solution.benchmarkReaderTaillard.readTheFile(file);
+    let fileSize: number = Solution.benchmarkReaderTaillard.getFileSize();
     for (let j = 0; j < fileSize; j++) {
-        Solution.benchmarkReaderEric.setOneBenchmark(actualBenchmarkInstanceIndex);
+        Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
 
 
         let optimum;
         let bestOptimum = 1000000;
         //benchMarkResults is out of use, because the benchmark file also contains the best known result
         //const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
-        const benchmarkOptimum = Solution.benchmarkReaderEric.bestFitness;
+        const benchmarkOptimum = Solution.benchmarkReaderTaillard.bestFitness;
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
             const terminationCriteria = hyperParameters.terminationCriteria[permutations[i][0]];

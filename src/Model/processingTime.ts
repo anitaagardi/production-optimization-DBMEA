@@ -2,7 +2,7 @@ import { Job } from "./job";
 import { Machine } from "./machine";
 
 /**
- * The processing times in Eric dataset
+ * The processing times in Taillard dataset
 */
 export class ProcessingTime {
     job: Job;

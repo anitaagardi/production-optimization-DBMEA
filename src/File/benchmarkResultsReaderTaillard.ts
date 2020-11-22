@@ -1,12 +1,12 @@
 import * as fs from 'fs';
-import { BENCHMARK_RESULTS_PATH_ERIC } from "../constants";
+import { BENCHMARK_RESULTS_PATH_TAILLARD } from "../constants";
 import { Utils } from './util';
 
 /**
  * Reads the benchmark results into one structure
  * But the benchmark results are also in the benchmark file, so it is now out of use
 */
-export class BenchmarkResultsReaderEric {
+export class BenchmarkResultsReaderTaillard {
     /**
      * reads all the benchmark results
      * ta001-005        1278    |     1359    |     1081    |     1293    |     1235
@@ -15,7 +15,7 @@ export class BenchmarkResultsReaderEric {
     public readAll() {
 
 
-        const files = Utils.getAllFiles(BENCHMARK_RESULTS_PATH_ERIC, []);
+        const files = Utils.getAllFiles(BENCHMARK_RESULTS_PATH_TAILLARD, []);
         for (const file of files) {
             var fileData = fs.readFileSync(file);
 

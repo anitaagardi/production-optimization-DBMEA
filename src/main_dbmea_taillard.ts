@@ -1,28 +1,36 @@
-import { BENCHMARKS_INSTANCES_PATH_ERIC } from "./constants";
+import { BENCHMARKS_INSTANCES_PATH_TAILLARD } from "./constants";
 import { dbmea } from "./Algorithms/Optimization/dbmea";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
 import { resetSeed } from "./Algorithms/Permutation/permutationGenerator";
-import { BenchmarkReaderEric } from "./File/benchmarkReaderEric";
-import { BenchmarkResultsReaderEric } from "./File/benchmarkResultsReaderEric";
+import { BenchmarkReaderTaillard } from "./File/benchmarkReaderTaillard";
+import { BenchmarkResultsReaderTaillard } from "./File/benchmarkResultsReaderTaillard";
 import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_ERIC, []);
+const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/Eric/all_benchmarks_dbmea.txt";
+const RESULTS_FILE = "results/Taillard/all_benchmarks_dbmea.txt";
 
-const hyperParameters = {
+/*const hyperParameters = {
     population: [50],
     terminationCriteria: [5],
     clones: [5, 6],
     infections: [20, 10],
     segmentLengths: [4, 6],
     transferSegmentLengths: [5, 6]
-}
+}*/
 
+const hyperParameters = {
+    population: [5],
+    terminationCriteria: [5],
+    clones: [5],
+    infections: [20],
+    segmentLengths: [4],
+    transferSegmentLengths: [5]
+}
 
 const parameterIndexes = [
     Array.from(Array(hyperParameters.population.length), (v, i) => i),
@@ -35,24 +43,24 @@ const parameterIndexes = [
 
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
-const benchMarkResults = new BenchmarkResultsReaderEric;
+const benchMarkResults = new BenchmarkResultsReaderTaillard;
 const results = benchMarkResults.readAll();
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
 for (const file of files) {
     let actualBenchmarkInstanceIndex = 0;
     console.log(file)
-    Solution.benchmarkReaderEric = new BenchmarkReaderEric();
-    Solution.benchmarkReaderEric.readTheFile(file);
-    let fileSize: number = Solution.benchmarkReaderEric.getFileSize();
+    Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
+    Solution.benchmarkReaderTaillard.readTheFile(file);
+    let fileSize: number = Solution.benchmarkReaderTaillard.getFileSize();
     for (let j = 0; j < fileSize; j++) {
-        Solution.benchmarkReaderEric.setOneBenchmark(actualBenchmarkInstanceIndex);
+        Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
 
 
         let optimum;
         let bestOptimum = 1000000;
         //benchMarkResults is out of use, because the benchmark file also contains the best known result
         //const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
-        const benchmarkOptimum = Solution.benchmarkReaderEric.bestFitness;
+        const benchmarkOptimum = Solution.benchmarkReaderTaillard.bestFitness;
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
 

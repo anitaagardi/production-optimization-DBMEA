@@ -9,7 +9,7 @@ import { exception } from "console";
 * @property {Job[]} jobs - the jobs, which contains the benchmark dataset
 * @property {Machine[]} machines - the machines, which contains the benchmark dataset
 */
-export class BenchmarkReaderEric {
+export class BenchmarkReaderTaillard {
 
     jobs: Job[] = [];
     machines: Machine[] = [];

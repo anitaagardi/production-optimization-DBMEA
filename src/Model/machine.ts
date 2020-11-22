@@ -3,7 +3,7 @@ import { Job } from "./job";
 export class Machine {
     id: string;
     jobs: Job[] = [];
-    //the actual free time of the machine(in Tanaka and Eric)
+    //the actual free time of the machine(in Tanaka and Taillard)
     time: number = 0;
     //the actual tardiness (in Tanaka)
     tardiness: number = 0;
@@ -20,7 +20,7 @@ export class Machine {
         }
     }
 
-    pushJobEric(job: Job, releaseTime: number, processingTime: number) {
+    pushJobTaillard(job: Job, releaseTime: number, processingTime: number) {
         this.jobs.push(job);
         if (releaseTime > this.time) {
             this.time = releaseTime + processingTime;

@@ -2,16 +2,16 @@ import { permutationGenerator } from "../Algorithms/Permutation/permutationGener
 import { BenchmarkReaderTanaka } from "../File/benchmarkReaderTanaka";
 import { Machine } from "./machine";
 import { combinations } from "../Algorithms/Permutation/combination";
-import { BenchmarkReaderEric } from "../File/benchmarkReaderEric";
+import { BenchmarkReaderTaillard } from "../File/benchmarkReaderTaillard";
 import { BENCHMARK_OPTIONS, getBenchmarkType } from "../File/benchmarkType";
 export class Solution {
     machines: Machine[] = [];
     permutation: number[] = [];
     fitnessValue: number = Number.MAX_SAFE_INTEGER;
-    //Eric dataset
+    //Taillard dataset
     idleTime: number = Number.MAX_SAFE_INTEGER;
     static benchmarkReaderTanaka: BenchmarkReaderTanaka = null;
-    static benchmarkReaderEric: BenchmarkReaderEric = null;
+    static benchmarkReaderTaillard: BenchmarkReaderTaillard = null;
     constructor(permutation?: number[]) {
         if (permutation) {
             this.permutation = permutation;
@@ -20,7 +20,7 @@ export class Solution {
             if (getBenchmarkType() == BENCHMARK_OPTIONS[0]) {
                 this.permutation = permutationGenerator(Solution.benchmarkReaderTanaka.jobs.length);
             } else if (getBenchmarkType() == BENCHMARK_OPTIONS[1]) {
-                this.permutation = permutationGenerator(Solution.benchmarkReaderEric.jobs.length);
+                this.permutation = permutationGenerator(Solution.benchmarkReaderTaillard.jobs.length);
             }
             else {
                 throw new Error("Benchmark type is not initialized!")
@@ -33,27 +33,27 @@ export class Solution {
         if (getBenchmarkType() == BENCHMARK_OPTIONS[0]) {
             return this.fitnessTanaka();
         } else if (getBenchmarkType() == BENCHMARK_OPTIONS[1]) {
-            return this.fitnessEric();
+            return this.fitnessTaillard();
         }
         else {
             throw new Error("Benchmark type is not initialized!")
         }
     }
-    fitnessEric(): number {
+    fitnessTaillard(): number {
         this.fitnessValue = 0;
         this.machines = [];
-        for (let j = 0; j < Solution.benchmarkReaderEric.machines.length; j++) {
+        for (let j = 0; j < Solution.benchmarkReaderTaillard.machines.length; j++) {
             this.machines.push(new Machine(j + ""));
         }
         for (let i = 0; i < this.permutation.length; i++) {
             let jobIndex = this.permutation[i];
-            for (let j = 0; j < Solution.benchmarkReaderEric.machines.length; j++) {
+            for (let j = 0; j < Solution.benchmarkReaderTaillard.machines.length; j++) {
                 if (j == 0) {
-                    let processingTime = Solution.benchmarkReaderEric.getProcessingTime(Solution.benchmarkReaderEric.jobs[jobIndex], Solution.benchmarkReaderEric.machines[j])
-                    this.machines[j].pushJobEric(Solution.benchmarkReaderEric.jobs[jobIndex], this.machines[j].time, processingTime);
+                    let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[j])
+                    this.machines[j].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[j].time, processingTime);
                 } else {
-                    let processingTime = Solution.benchmarkReaderEric.getProcessingTime(Solution.benchmarkReaderEric.jobs[jobIndex], Solution.benchmarkReaderEric.machines[j])
-                    this.machines[j].pushJobEric(Solution.benchmarkReaderEric.jobs[jobIndex], this.machines[j - 1].time, processingTime);
+                    let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[j])
+                    this.machines[j].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[j - 1].time, processingTime);
                 }
             }
 
@@ -70,8 +70,8 @@ export class Solution {
 
         //the sum of the processing times
         let processingTimes = 0;
-        for (let i = 0; i < Solution.benchmarkReaderEric.processingTimes.length; i++) {
-            processingTimes = processingTimes + Solution.benchmarkReaderEric.processingTimes[i].processingTime;
+        for (let i = 0; i < Solution.benchmarkReaderTaillard.processingTimes.length; i++) {
+            processingTimes = processingTimes + Solution.benchmarkReaderTaillard.processingTimes[i].processingTime;
         }
         this.idleTime = machineTimes - processingTimes;
         return this.fitnessValue;
