@@ -14,12 +14,10 @@ export class BenchmarkReaderTaillard {
     jobs: Job[] = [];
     machines: Machine[] = [];
     processingTimes: ProcessingTime[] = [];
-    bestFitness: number;
     //the whole benchmark data (job, machine, processing time) of the whole txt file
     oneFileJobs: Job[][] = [];
     oneFileMachines: Machine[][] = [];
     oneFileProcessingTime: ProcessingTime[][] = [];
-    oneFileBestFitness: number[] = [];
     /**
       * Reads the whole file (contains many benchmark data)
       */
@@ -53,7 +51,6 @@ export class BenchmarkReaderTaillard {
             if (inputDataRowData.length == 5) {
                 numberOfJobs = inputDataRowData[0];
                 numberOfMachines = inputDataRowData[1];
-                this.oneFileBestFitness.push(Number(inputDataRowData[3]))
                 for (let j = 0; j < numberOfJobs; j++) {
                     let job = new Job(j + "", 0, 0);
                     actualFileJobs.push(job);
@@ -91,7 +88,6 @@ export class BenchmarkReaderTaillard {
         this.jobs = this.oneFileJobs[benchmarkIndex];
         this.machines = this.oneFileMachines[benchmarkIndex];
         this.processingTimes = this.oneFileProcessingTime[benchmarkIndex];
-        this.bestFitness = this.oneFileBestFitness[benchmarkIndex];
     }
     public getFileSize(): number {
         return this.oneFileJobs.length;

@@ -58,9 +58,9 @@ for (const file of files) {
 
         let optimum;
         let bestOptimum = 1000000;
-        //benchMarkResults is out of use, because the benchmark file also contains the best known result
-        //const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
-        const benchmarkOptimum = Solution.benchmarkReaderTaillard.bestFitness;
+
+        const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
+
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
 

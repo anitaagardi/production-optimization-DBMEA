@@ -14,9 +14,18 @@ console.log("number of benchmarks: ", files.length);
 
 const RESULTS_FILE = "results/Taillard/all_benchmarks_ga.txt";
 
-const hyperParameters = {
+/*const hyperParameters = {
     terminationCriteria: [500, 1000],
     population: [50, 1000],
+    elitism: [5],
+    oxRate: [0.3],
+    cxRate: [0.3],
+    pmxRate: [0.3],
+    mutationRate: [0.1]
+}*/
+const hyperParameters = {
+    terminationCriteria: [500],
+    population: [50],
     elitism: [5],
     oxRate: [0.3],
     cxRate: [0.3],
@@ -52,9 +61,8 @@ for (const file of files) {
         Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
         let optimum;
         let bestOptimum = 1000000;
-        //benchMarkResults is out of use, because the benchmark file also contains the best known result
-        //const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
-        const benchmarkOptimum = Solution.benchmarkReaderTaillard.bestFitness;
+        const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
+
 
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
