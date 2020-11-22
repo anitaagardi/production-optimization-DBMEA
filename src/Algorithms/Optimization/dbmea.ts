@@ -38,8 +38,8 @@ export function dbmea(n_ind: number, termination_criteria: number, n_clones: num
         population = bacterialMutation(population, n_clones, i_seg);
         //local search operation
         for (let i = 0; i < population.length; i++) {
-            twoOpt(population[i]);
-            threeOpt(population[i]);
+            population[i] = twoOpt(population[i]);
+            population[i] = threeOpt(population[i]);
         }
         //gene transfer
         population = geneTransfer(population, n_inf, i_trans);

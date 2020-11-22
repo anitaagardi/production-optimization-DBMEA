@@ -30,6 +30,14 @@ Tanaka: npm run start:dbmea:tanaka
 
 Taillard:npm run start:dbmea:taillard
 
+
+DBMEA_SA:
+
+
+Tanaka: npm run start:dbmea_sa:tanaka
+
+Taillard: npm run start:dbmea_sa:taillard
+
 Test:
 run all test:
 npm run test

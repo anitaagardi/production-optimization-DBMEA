@@ -45,8 +45,8 @@ const benchMarkResults = new BenchmarkResultsReaderTaillard;
 benchMarkResults.readAll();
 
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
+let actualBenchmarkInstanceIndex = 0;
 for (const file of files) {
-    let actualBenchmarkInstanceIndex = 0;
     console.log(file)
     Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
     Solution.benchmarkReaderTaillard.readTheFile(file);

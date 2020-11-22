@@ -51,9 +51,9 @@ const permutations = Utils.combineArraysRecursively(parameterIndexes);
 const benchMarkResults = new BenchmarkResultsReaderTaillard;
 
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
+let actualBenchmarkInstanceIndex = 0;
 for (const file of files) {
-    console.log(file)
-    let actualBenchmarkInstanceIndex = 0;
+    console.log(file);
     Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
     Solution.benchmarkReaderTaillard.readTheFile(file);
     let fileSize: number = Solution.benchmarkReaderTaillard.getFileSize();
