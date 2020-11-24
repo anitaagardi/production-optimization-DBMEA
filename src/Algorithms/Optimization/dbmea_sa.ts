@@ -3,6 +3,7 @@ import { bacterialMutation } from "../Operators/DBMEA/Bacterial_Mutation/bacteri
 import { geneTransfer } from "../Operators/DBMEA/Gene_Transfer/geneTransfer";
 import { threeOpt } from "../Operators/DBMEA/threeOpt";
 import { twoOpt } from "../Operators/DBMEA/twoOpt";
+import { globalRandomGenerator } from "../Permutation/permutationGenerator";
 import { sa } from "./sa";
 /**
  * The discrete bacterial memetic evolutionary algorithm (DBMEA) with simulated annealing (SA)
@@ -12,6 +13,7 @@ import { sa } from "./sa";
  * @param {number} dbmea_n_inf the number of infections in the gene transfer, ie the number of created bacteria (new permutation) in the gene transfer (DBMEA)
  * @param {number} dbmea_i_seg the length of the segment in bacterial mutation (DBMEA)
  * @param {number} dbmea_i_trans the length of the transferred segment in genetransfer operator (DBMEA)
+ * @param {number} dbmea_mortality_rate the mortality rate i.e. the number of new random solutions over the iterations (DBMEA)
  * @param {number} sa_termination_criteria  the number of unimproved iterations cannot exceed (SA)
  * @param {number} sa_temperature the temperature (determines the probability of accepting worse neighbour solution) (SA)
  * @param {number} sa_alpha the alpha (the decreasion of the temperature) (SA)
@@ -21,7 +23,7 @@ import { sa } from "./sa";
  */
 
 //REFACTORING??
-export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number, dbmea_n_clones: number, dbmea_n_inf: number, dbmea_i_seg: number, dbmea_i_trans: number, sa_termination_criteria: number, sa_temperature: number, sa_alpha: number, sa_length: number, sa_opt_number: number): Solution {
+export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number, dbmea_n_clones: number, dbmea_n_inf: number, dbmea_i_seg: number, dbmea_i_trans: number, dbmea_mortality_rate: number, sa_termination_criteria: number, sa_temperature: number, sa_alpha: number, sa_length: number, sa_opt_number: number): Solution {
 
     //creation and initialization of the population
     let population: Solution[] = [];
@@ -42,13 +44,23 @@ export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number
 
     //termination criteria
     while (notImprovedCount < dbmea_termination_criteria) {
+        //the mortality of the worst solutions --> creation of new random solutions
+        for (let i = 1; i <= dbmea_mortality_rate; i++) {
+            population[population.length - i] = new Solution();
+        }
+        /*
+        The random mortality was not so good...
+        for (let i = 1; i <= dbmea_mortality_rate; i++) {
+            let index: number = Math.floor(globalRandomGenerator() * population.length);
+            population[index] = new Solution();
+        }*/
         //bacterial mutation
         population = bacterialMutation(population, dbmea_n_clones, dbmea_i_seg);
         //local search operation
         for (let i = 0; i < population.length; i++) {
             //twoOpt(population[i]);
             //threeOpt(population[i]);
-            population[i] = sa(sa_termination_criteria, sa_temperature, sa_alpha, sa_length, sa_opt_number, population[i]);
+            population[i] = sa(sa_termination_criteria, sa_temperature, sa_alpha, sa_length, sa_opt_number, population[i], false);
         }
         //gene transfer
         population = geneTransfer(population, dbmea_n_inf, dbmea_i_trans);

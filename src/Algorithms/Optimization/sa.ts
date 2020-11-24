@@ -1,3 +1,4 @@
+import { exception } from "console";
 import { Solution } from "../../Model/solution";
 import { threeOptMove } from "../Operators/SA/threeOptMove";
 import { twoOptMove } from "../Operators/SA/twoOptMove";
@@ -13,10 +14,9 @@ import { globalRandomGenerator } from "../Permutation/permutationGenerator";
  * @param {number} initial_solution  the initial solution (optional)
  * @returns {Solution} the best solution created with SA
  */
-export function sa(termination_criteria: number, temperature: number, alpha: number, length: number, opt_number: number, initial_solution: Solution = new Solution()): Solution {
+export function sa(termination_criteria: number, temperature: number, alpha: number, length: number, opt_number: number, initial_solution: Solution = new Solution(), isPrintFitnesses: boolean = true): Solution {
     if ((opt_number != 2) && (opt_number != 3)) {
-        console.log("Only the 2-opt and 3-opt move is implemented");
-        return null;
+        throw new exception("Only the 2-opt and 3-opt move is implemented");
     }
     let actualSolution: Solution = initial_solution;
     let neighbourSolution: Solution = new Solution();
@@ -40,7 +40,9 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
                 let deltaBestAndActual = neighbourSolution.fitness() - bestSolutionFitness;
                 //if the neighbour is better than the ever best
                 if (deltaBestAndActual < 0) {
-                    //process.stdout.write(bestSolutionFitness + " ");
+                    if (isPrintFitnesses) {
+                        process.stdout.write(bestSolutionFitness + " ");
+                    }
                     bestSolution.permutation = [...neighbourSolution.permutation];
                     bestSolutionFitness = bestSolution.fitness();
                     notImprovedCount = 0;
@@ -56,6 +58,8 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
         //the probability of accepting neighbours with worse fitness is decreasing along the iteration (but in a given length will remain the temperature the same)
         temperature = alpha * temperature;
     }
-    //process.stdout.write("\n");
+    if (isPrintFitnesses) {
+        process.stdout.write("\n");
+    }
     return bestSolution;
 }

@@ -45,8 +45,10 @@ const benchMarkResults = new BenchmarkResultsReaderTaillard;
 benchMarkResults.readAll();
 
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
-let actualBenchmarkInstanceIndex = 0;
+
+let actualOptimumIndex = 0;
 for (const file of files) {
+    let actualBenchmarkInstanceIndex = 0;
     console.log(file)
     Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
     Solution.benchmarkReaderTaillard.readTheFile(file);
@@ -57,7 +59,7 @@ for (const file of files) {
 
         let optimum;
         let bestOptimum = 1000000;
-        const benchmarkOptimum = benchMarkResults.findOptimum(actualBenchmarkInstanceIndex);
+        const benchmarkOptimum = benchMarkResults.findOptimum(actualOptimumIndex);
 
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
@@ -92,5 +94,6 @@ for (const file of files) {
         }
         fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + "\n");
         actualBenchmarkInstanceIndex++;
+        actualOptimumIndex++;
     }
 }
