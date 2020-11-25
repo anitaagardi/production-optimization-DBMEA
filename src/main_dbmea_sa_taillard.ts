@@ -15,6 +15,15 @@ console.log("number of benchmarks: ", files.length);
 
 const RESULTS_FILE = "results/Taillard/all_benchmarks_dbmea_sa.txt";
 
+process.on('uncaughtException', (error) => {
+    console.log('Error: ', error);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error, promise) => {
+    console.log(' We forgot to handle a promise rejection here: ', promise);
+    console.log(' The error was: ', error);
+});
 
 const hyperParameters = {
     dbmea_population: [8],
@@ -68,6 +77,7 @@ for (const file of files) {
 
         let optimum;
         let bestOptimum = 1000000;
+        let ellapsedTime;
 
         const benchmarkOptimum = benchMarkResults.findOptimum(actualOptimumIndex);
 
@@ -94,7 +104,7 @@ for (const file of files) {
 
             optimum = dbmeaResultSolution.fitness();
 
-            const ellapsedTime = process.hrtime(startTime);
+            ellapsedTime = process.hrtime(startTime);
 
             if (bestOptimum > optimum) {
                 bestOptimum = optimum;
@@ -110,7 +120,7 @@ for (const file of files) {
             }
         }
 
-        fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + "\n");
+        fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec]" + "\n");
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }
