@@ -20,8 +20,7 @@ if (myArgs.length == 0) {
 } else {
     files.push(BENCHMARKS_INSTANCES_PATH_TAILLARD + "" + myArgs[0]);
     let indexTai = myArgs[0].indexOf("tai");
-    let indexTxt = myArgs[0].indexOf(".txt");
-    argumentBenchmarkName = myArgs[0].substring(indexTai, (indexTxt - indexTai) + 1);
+    argumentBenchmarkName = myArgs[0].substring(indexTai).replace(".txt", "");
     RESULTS_FILE += argumentBenchmarkName;
     RESULTS_FILE += "benchmarks_ga.txt";
 }
