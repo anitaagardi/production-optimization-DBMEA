@@ -7,12 +7,31 @@ import { Solution } from "./Model/solution";
 import * as fs from 'fs';
 import { resetSeed } from "./Algorithms/Permutation/permutationGenerator";
 import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
+import { FileDetails } from "./File/fileDetails";
+import * as dateFormat from 'dateformat';
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TANAKA, []);
+var myArgs = process.argv.slice(2);
+let files = [];
+let RESULTS_FILE = "results/Tanaka/";
+let argumentBenchmarkName = "";
+if (myArgs.length == 0) {
+    files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TANAKA, []);
+    RESULTS_FILE += "all_benchmarks_dbmea.txt";
+} else {
+    files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TANAKA + "/" + myArgs[0] + "/" + myArgs[1], []);
 
-console.log("number of benchmarks: ", files.length);
+    RESULTS_FILE += argumentBenchmarkName;
+    RESULTS_FILE += myArgs[0] + "_" + myArgs[1] + "benchmarks_dbmea.txt";
+}
+process.on('uncaughtException', (error) => {
+    console.log('Error: ', error);
+    process.exit(1);
+});
 
-const RESULTS_FILE = "results/Tanaka/all_benchmarks_dbmea.txt";
+process.on('unhandledRejection', (error, promise) => {
+    console.log(' We forgot to handle a promise rejection here: ', promise);
+    console.log(' The error was: ', error);
+});
 
 const hyperParameters = {
     population: [50],
@@ -37,6 +56,8 @@ const permutations = Utils.combineArraysRecursively(parameterIndexes);
 const benchMarkResults = new BenchmarkResultsReaderTanaka;
 const results = benchMarkResults.readAll();
 setBenchmarkType(BENCHMARK_OPTIONS[0]);
+const algorithmStartTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");
+fs.appendFileSync(RESULTS_FILE, "Start time: " + algorithmStartTime);
 for (const file of files) {
     console.log(file)
     Solution.benchmarkReaderTanaka = new BenchmarkReaderTanaka();
@@ -46,7 +67,9 @@ for (const file of files) {
     const benchmarkOptimum = benchMarkResults.findOptimum(results, currentBenchMarkName);
 
     let optimum;
+    let optimumJobSequence;
     let bestOptimum = 1000000;
+    let ellapsedTime;
 
     for (let i = 0; i < permutations.length; i++) {
         resetSeed();
@@ -66,7 +89,9 @@ for (const file of files) {
 
         optimum = dbmeaResultSolution.fitness();
 
-        const ellapsedTime = process.hrtime(startTime);
+        optimum = dbmeaResultSolution.fitness();
+        optimumJobSequence = dbmeaResultSolution.getJobSequence()
+        ellapsedTime = process.hrtime(startTime);
 
         if (bestOptimum > optimum) {
             bestOptimum = optimum;
@@ -82,5 +107,8 @@ for (const file of files) {
         }
     }
 
-    fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + "\n");
+    fs.appendFileSync(RESULTS_FILE, currentBenchMarkName + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n");
+
 }
+const algorithmEndTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");;
+fs.appendFileSync(RESULTS_FILE, "End time: " + algorithmEndTime);

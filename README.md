@@ -41,9 +41,13 @@ Taillard: npm run start:dbmea_sa:taillard
 
 ----------------------------------------------------
 
-To run each taillard dataset, you must specify the file name, for example :
+To run only one Taillard dataset, you must specify the file name, for example :
 
 npm run start:dbmea_sa:taillard 1tai20_5.txt
+
+To run only one Tanaka dataset, you must specify the directory names ( e.g. n=20 m=3 ), for example :
+
+npm run start:dbmea_sa:tanaka n=20 m=3
 
 ----------------------------------------------------
 

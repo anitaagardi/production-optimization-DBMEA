@@ -139,6 +139,7 @@ for (const file of files) {
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }
-    const algorithmEndTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");;
-    fs.appendFileSync(RESULTS_FILE, "End time: " + algorithmEndTime);
+
 }
+const algorithmEndTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");
+fs.appendFileSync(RESULTS_FILE, "End time: " + algorithmEndTime);
