@@ -17,7 +17,6 @@
     "start:dbmea:tanaka": "npm run build:dbmea:tanaka && node dist/main_dbmea_tanaka.js",
     "build:dbmea:taillard": "tsc --target ES5 --sourceMap src/main_dbmea_taillard.ts --outDir dist",
     "start:dbmea:taillard": "npm run build:dbmea:taillard && node dist/main_dbmea_taillard.js",
-
     "build:dbmea_sa:tanaka": "tsc --target ES5 --sourceMap src/main_dbmea_sa_tanaka.ts --outDir dist",
     "start:dbmea_sa:tanaka": "npm run build:dbmea_sa:tanaka && node dist/main_dbmea_sa_tanaka.js",
     "build:dbmea_sa:taillard": "tsc --target ES5 --sourceMap src/main_dbmea_sa_taillard.ts --outDir dist",
@@ -35,6 +34,7 @@
   "homepage": "https://github.com/anitaagardi/production-optimization-DBMEA#readme",
   "dependencies": {
     "@types/js-combinatorics": "^0.5.32",
+    "dateformat": "^4.0.0",
     "fs": "0.0.1-security",
     "js-combinatorics": "^1.4.5",
     "seedrandom": "^3.0.5"

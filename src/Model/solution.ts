@@ -29,6 +29,19 @@ export class Solution {
         }
 
     }
+    /**
+     * Get the job sequences from the permutation in order to write to the file
+     * @returns {number[]} the permutation of jobs
+     */
+
+    getJobSequence(): number[] {
+        let jobSequence: number[] = [];
+        this.permutation.map(value => {
+            jobSequence.push(value + 1);
+        });
+        return jobSequence;
+    }
+
     fitness(): number {
         if (getBenchmarkType() == BENCHMARK_OPTIONS[0]) {
             return this.fitnessTanaka();

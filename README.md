@@ -9,13 +9,13 @@ npm install
 
 Command:
 
-GA:
+GA (running all dataset):
 
 Tanaka: npm run start:ga:tanaka
 
 Taillard:npm run start:ga:taillard
  
-SA:
+SA (running all dataset):
 
 
 Tanaka: npm run start:sa:tanaka
@@ -23,7 +23,7 @@ Tanaka: npm run start:sa:tanaka
 Taillard:npm run start:sa:taillard
 
 
-DBMEA:
+DBMEA (running all dataset):
 
 
 Tanaka: npm run start:dbmea:tanaka
@@ -31,17 +31,27 @@ Tanaka: npm run start:dbmea:tanaka
 Taillard:npm run start:dbmea:taillard
 
 
-DBMEA_SA:
+DBMEA_SA (running all dataset):
 
 
 Tanaka: npm run start:dbmea_sa:tanaka
 
 Taillard: npm run start:dbmea_sa:taillard
 
+
+----------------------------------------------------
+
+To run each taillard dataset, you must specify the file name, for example :
+
+npm run start:dbmea_sa:taillard 1tai20_5.txt
+
+----------------------------------------------------
+
 Test:
 run all test:
 npm run test
 
+----------------------------------------------------
 
 The benchmark instances are in the 'benchmark_instances/Taillard'  and 'benchmark_instances/Tanaka' folder.
 The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Taillard/results' folder.

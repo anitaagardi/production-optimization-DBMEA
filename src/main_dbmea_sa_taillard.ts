@@ -1,5 +1,4 @@
 import { BENCHMARKS_INSTANCES_PATH_TAILLARD } from "./constants";
-import { dbmea } from "./Algorithms/Optimization/dbmea";
 import { Utils } from "./File/util";
 import { Solution } from "./Model/solution";
 import * as fs from 'fs';
@@ -8,12 +7,30 @@ import { BenchmarkReaderTaillard } from "./File/benchmarkReaderTaillard";
 import { BenchmarkResultsReaderTaillard } from "./File/benchmarkResultsReaderTaillard";
 import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
 import { dbmea_sa } from "./Algorithms/Optimization/dbmea_sa";
+import { FileDetails } from "./File/fileDetails";
+import * as dateFormat from 'dateformat';
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
+var myArgs = process.argv.slice(2);
+let files = [];
+let RESULTS_FILE = "results/Taillard/";
+let argumentBenchmarkName = "";
+if (myArgs.length == 0) {
+    files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
+    RESULTS_FILE += "all_benchmarks_dbmea_sa.txt";
+} else {
+    files.push(BENCHMARKS_INSTANCES_PATH_TAILLARD + "" + myArgs[0]);
+    let indexTai = myArgs[0].indexOf("tai");
+    let indexTxt = myArgs[0].indexOf(".txt");
+    argumentBenchmarkName = myArgs[0].substring(indexTai, (indexTxt - indexTai) + 1);
+    RESULTS_FILE += argumentBenchmarkName;
+    RESULTS_FILE += "benchmarks_dbmea_sa.txt";
+}
+
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/Taillard/all_benchmarks_dbmea_sa.txt";
+
+
 
 process.on('uncaughtException', (error) => {
     console.log('Error: ', error);
@@ -61,10 +78,15 @@ const parameterIndexes = [
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
 const benchMarkResults = new BenchmarkResultsReaderTaillard;
-const results = benchMarkResults.readAll();
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
+const results = benchMarkResults.readAll();
 let actualOptimumIndex = 0;
+if (myArgs.length != 0) {
+    actualOptimumIndex = benchMarkResults.benchmarkAssignments[argumentBenchmarkName];
+}
 
+const algorithmStartTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");
+fs.appendFileSync(RESULTS_FILE, "Start time: " + algorithmStartTime);
 for (const file of files) {
     let actualBenchmarkInstanceIndex = 0;
     console.log(file)
@@ -74,13 +96,14 @@ for (const file of files) {
     for (let j = 0; j < fileSize; j++) {
         Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
 
-
         let optimum;
+        let optimumJobSequence;
         let bestOptimum = 1000000;
         let ellapsedTime;
 
-        const benchmarkOptimum = benchMarkResults.findOptimum(actualOptimumIndex);
-
+        const fileDetails: FileDetails = benchMarkResults.findOptimumFileDetailsByIndex(actualOptimumIndex);
+        const benchmarkOptimum = fileDetails.optimum;
+        const benchmarkName = fileDetails.name;
         for (let i = 0; i < permutations.length; i++) {
             resetSeed();
 
@@ -102,8 +125,9 @@ for (const file of files) {
 
             let dbmeaResultSolution: Solution = dbmea_sa(dbmea_population, dbmea_terminationCriteria, dbmea_clone, dbmea_infection, dbmea_segmentLength, dbmea_transferSegmentLength, dbmea_mortality_rate, sa_terminationCriteria, sa_temperature, sa_alpha, sa_length, sa_optNumber);
 
-            optimum = dbmeaResultSolution.fitness();
 
+            optimum = dbmeaResultSolution.fitness();
+            optimumJobSequence = dbmeaResultSolution.getJobSequence()
             ellapsedTime = process.hrtime(startTime);
 
             if (bestOptimum > optimum) {
@@ -115,13 +139,15 @@ for (const file of files) {
             if (benchmarkOptimum > optimum) {
                 fs.appendFileSync(RESULTS_FILE, "better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 fs.appendFileSync("parameters: ", dbmea_population + " " + dbmea_terminationCriteria + " " + dbmea_clone + " " + dbmea_infection
-                    + " " + dbmea_segmentLength + " " + dbmea_transferSegmentLength + " " + sa_terminationCriteria + " " + sa_temperature + " " + sa_alpha + " " + sa_length + " " + sa_optNumber);
+                    + " " + dbmea_segmentLength + " " + dbmea_transferSegmentLength + " " + sa_terminationCriteria + " " + sa_temperature + " " + sa_alpha + " " + sa_length + " " + sa_optNumber + " \n");
                 console.log("Better found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
         }
 
-        fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec]" + "\n");
+        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n");
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }
+    const algorithmEndTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");;
+    fs.appendFileSync(RESULTS_FILE, "End time: " + algorithmEndTime);
 }

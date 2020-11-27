@@ -7,12 +7,37 @@ import { ga } from "./Algorithms/Optimization/ga";
 import { BenchmarkResultsReaderTaillard } from "./File/benchmarkResultsReaderTaillard";
 import { BenchmarkReaderTaillard } from "./File/benchmarkReaderTaillard";
 import { BENCHMARK_OPTIONS, setBenchmarkType } from "./File/benchmarkType";
+import * as dateFormat from 'dateformat';
+import { FileDetails } from "./File/fileDetails";
 
-const files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
+var myArgs = process.argv.slice(2);
+let files = [];
+let RESULTS_FILE = "results/Taillard/";
+let argumentBenchmarkName = "";
+if (myArgs.length == 0) {
+    files = Utils.getAllFiles(BENCHMARKS_INSTANCES_PATH_TAILLARD, []);
+    RESULTS_FILE += "all_benchmarks_ga.txt";
+} else {
+    files.push(BENCHMARKS_INSTANCES_PATH_TAILLARD + "" + myArgs[0]);
+    let indexTai = myArgs[0].indexOf("tai");
+    let indexTxt = myArgs[0].indexOf(".txt");
+    argumentBenchmarkName = myArgs[0].substring(indexTai, (indexTxt - indexTai) + 1);
+    RESULTS_FILE += argumentBenchmarkName;
+    RESULTS_FILE += "benchmarks_ga.txt";
+}
+
 
 console.log("number of benchmarks: ", files.length);
 
-const RESULTS_FILE = "results/Taillard/all_benchmarks_ga.txt";
+process.on('uncaughtException', (error) => {
+    console.log('Error: ', error);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error, promise) => {
+    console.log(' We forgot to handle a promise rejection here: ', promise);
+    console.log(' The error was: ', error);
+});
 
 /*const hyperParameters = {
     terminationCriteria: [500, 1000],
@@ -24,8 +49,8 @@ const RESULTS_FILE = "results/Taillard/all_benchmarks_ga.txt";
     mutationRate: [0.1]
 }*/
 const hyperParameters = {
-    terminationCriteria: [500],
-    population: [50],
+    terminationCriteria: [1000],
+    population: [1000],
     elitism: [5],
     oxRate: [0.3],
     cxRate: [0.3],
@@ -49,20 +74,32 @@ const parameterIndexes = [
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
 const benchMarkResults = new BenchmarkResultsReaderTaillard;
-
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
+const results = benchMarkResults.readAll();
 let actualOptimumIndex = 0;
+if (myArgs.length != 0) {
+    actualOptimumIndex = benchMarkResults.benchmarkAssignments[argumentBenchmarkName];
+}
+
+const algorithmStartTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");
+fs.appendFileSync(RESULTS_FILE, "Start time: " + algorithmStartTime);
 for (const file of files) {
     let actualBenchmarkInstanceIndex = 0;
-    console.log(file);
+    console.log(file)
     Solution.benchmarkReaderTaillard = new BenchmarkReaderTaillard();
     Solution.benchmarkReaderTaillard.readTheFile(file);
     let fileSize: number = Solution.benchmarkReaderTaillard.getFileSize();
     for (let j = 0; j < fileSize; j++) {
         Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
+
         let optimum;
+        let optimumJobSequence;
         let bestOptimum = 1000000;
-        const benchmarkOptimum = benchMarkResults.findOptimum(actualOptimumIndex);
+        let ellapsedTime;
+
+        const fileDetails: FileDetails = benchMarkResults.findOptimumFileDetailsByIndex(actualOptimumIndex);
+        const benchmarkOptimum = fileDetails.optimum;
+        const benchmarkName = fileDetails.name;
 
 
         for (let i = 0; i < permutations.length; i++) {
@@ -82,8 +119,8 @@ for (const file of files) {
             let gaResultSolution: Solution = ga(terminationCriteria, population, elitism, oxRate, cxRate, pmxRate, mutationRate);
 
             optimum = gaResultSolution.fitness();
-
-            const ellapsedTime = process.hrtime(startTime);
+            optimumJobSequence = gaResultSolution.getJobSequence()
+            ellapsedTime = process.hrtime(startTime);
 
             if (bestOptimum > optimum) {
                 bestOptimum = optimum;
@@ -98,8 +135,10 @@ for (const file of files) {
             }
         }
 
-        fs.appendFileSync(RESULTS_FILE, file + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + "\n");
+        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n");
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }
+    const algorithmEndTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");;
+    fs.appendFileSync(RESULTS_FILE, "End time: " + algorithmEndTime);
 }
