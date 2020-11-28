@@ -60,20 +60,19 @@ export class Solution {
         }
         for (let i = 0; i < this.permutation.length; i++) {
             let jobIndex = this.permutation[i];
-            for (let j = 0; j < Solution.benchmarkReaderTaillard.machines.length; j++) {
-                if (j == 0) {
-                    let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[j])
-                    this.machines[j].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[j].time, processingTime);
-                } else {
-                    let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[j])
-                    this.machines[j].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[j - 1].time, processingTime);
-                }
+            let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[0])
+            this.machines[0].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[0].time, processingTime);
+
+            for (let j = 1; j < Solution.benchmarkReaderTaillard.machines.length; j++) {
+                let processingTime = Solution.benchmarkReaderTaillard.getProcessingTime(Solution.benchmarkReaderTaillard.jobs[jobIndex], Solution.benchmarkReaderTaillard.machines[j])
+                this.machines[j].pushJobTaillard(Solution.benchmarkReaderTaillard.jobs[jobIndex], this.machines[j - 1].time, processingTime);
             }
 
         }
         //the makespan (the maximum of the machine times) is the fitness value
         this.fitnessValue = this.machines[this.machines.length - 1].time;
 
+        /* DO not calculate idle time
         //the idle time calculation
         //sum of the machine time (contains the idle and the processing times)
         let machineTimes = 0;
@@ -87,6 +86,7 @@ export class Solution {
             processingTimes = processingTimes + Solution.benchmarkReaderTaillard.processingTimes[i].processingTime;
         }
         this.idleTime = machineTimes - processingTimes;
+        */
         return this.fitnessValue;
     }
     fitnessTanaka(): number {

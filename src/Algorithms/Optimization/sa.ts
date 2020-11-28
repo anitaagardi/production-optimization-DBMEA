@@ -24,6 +24,10 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
     let bestSolutionFitness: number = bestSolution.fitness();
     let notImprovedCount: number = 0;
     while (notImprovedCount < termination_criteria) {
+        if(notImprovedCount % 100 == 0)
+        {
+            process.stdout.write(".");
+        }
         //length property: in a given length will remain the temperature the same
         for (let l = 0; l < length; l++) {
             if (opt_number == 2) {
