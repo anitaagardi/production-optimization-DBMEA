@@ -20,8 +20,7 @@ export class Machine {
         }
     }
 
-    pushJobTaillard(job: Job, releaseTime: number, processingTime: number) {
-        //this.jobs.push(job);
+    pushJobTaillard(releaseTime: number, processingTime: number) {
         if (releaseTime > this.time) {
             this.time = releaseTime + processingTime;
         } else {

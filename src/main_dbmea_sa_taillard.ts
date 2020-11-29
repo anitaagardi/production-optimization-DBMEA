@@ -53,7 +53,7 @@ const hyperParameters = {
     sa_temperature: [1000],
     sa_alpha: [0.1],
     sa_length: [5],
-    sa_optNumber: [3] //only 2-opt / 3-opt
+    sa_optNumber: [2] //only 2-opt / 3-opt
 
 }
 

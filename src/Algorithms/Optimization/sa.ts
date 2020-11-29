@@ -14,7 +14,7 @@ import { globalRandomGenerator } from "../Permutation/permutationGenerator";
  * @param {number} initial_solution  the initial solution (optional)
  * @returns {Solution} the best solution created with SA
  */
-export function sa(termination_criteria: number, temperature: number, alpha: number, length: number, opt_number: number, initial_solution: Solution = new Solution(), isPrintFitnesses: boolean = true): Solution {
+export function sa(termination_criteria: number, temperature: number, alpha: number, length: number, opt_number: number, initial_solution: Solution = new Solution(), isPrintFitnesses: boolean = false): Solution {
     if ((opt_number != 2) && (opt_number != 3)) {
         throw new exception("Only the 2-opt and 3-opt move is implemented");
     }
@@ -25,9 +25,6 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
     let notImprovedCount: number = 0;
 
     while (notImprovedCount < termination_criteria) {
-        if (notImprovedCount % 100 == 0) {
-            process.stdout.write(".");
-        }
         //length property: in a given length will remain the temperature the same
         for (let l = 0; l < length; l++) {
             if (opt_number == 2) {

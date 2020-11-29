@@ -60,7 +60,8 @@ export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number
         for (let i = 0; i < population.length; i++) {
             //twoOpt(population[i]);
             //threeOpt(population[i]);
-            population[i] = sa(sa_termination_criteria, sa_temperature, sa_alpha, sa_length, sa_opt_number, population[i], false);
+            population[i] = sa(sa_termination_criteria, sa_temperature, sa_alpha, sa_length, sa_opt_number, population[i]);
+            process.stdout.write(".");
         }
         //gene transfer
         population = geneTransfer(population, dbmea_n_inf, dbmea_i_trans);
