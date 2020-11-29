@@ -23,9 +23,9 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
     let bestSolution: Solution = new Solution();
     let bestSolutionFitness: number = bestSolution.fitness();
     let notImprovedCount: number = 0;
+
     while (notImprovedCount < termination_criteria) {
-        if(notImprovedCount % 100 == 0)
-        {
+        if (notImprovedCount % 100 == 0) {
             process.stdout.write(".");
         }
         //length property: in a given length will remain the temperature the same
@@ -37,18 +37,25 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
                 neighbourSolution = threeOptMove(actualSolution);
             }
 
-            let delta: number = neighbourSolution.fitness() - actualSolution.fitness();
+            // calculate fittness if it was not caltulated before
+            if (actualSolution.fitnessValue == Number.MAX_SAFE_INTEGER) {
+                actualSolution.fitness();
+            }
+
+            let delta: number = neighbourSolution.fitness() - actualSolution.fitnessValue;
             //if the neighbour is better than the actual solution
             if (delta <= 0) {
                 actualSolution.permutation = [...neighbourSolution.permutation];
-                let deltaBestAndActual = neighbourSolution.fitness() - bestSolutionFitness;
+                actualSolution.fitnessValue = neighbourSolution.fitnessValue;
+                let deltaBestAndActual = neighbourSolution.fitnessValue - bestSolutionFitness;
                 //if the neighbour is better than the ever best
                 if (deltaBestAndActual < 0) {
                     if (isPrintFitnesses) {
                         process.stdout.write(bestSolutionFitness + " ");
                     }
                     bestSolution.permutation = [...neighbourSolution.permutation];
-                    bestSolutionFitness = bestSolution.fitness();
+                    bestSolution.fitnessValue = neighbourSolution.fitnessValue;
+                    bestSolutionFitness = neighbourSolution.fitnessValue;
                     notImprovedCount = 0;
                 } else {
                     notImprovedCount++;
@@ -57,6 +64,7 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
             //if the neighbour is not better we can accept it with a probability
             else if (Math.exp(-delta / temperature) > globalRandomGenerator()) {
                 actualSolution.permutation = [...neighbourSolution.permutation];
+                actualSolution.fitnessValue = neighbourSolution.fitnessValue;
             }
         }
         //the probability of accepting neighbours with worse fitness is decreasing along the iteration (but in a given length will remain the temperature the same)

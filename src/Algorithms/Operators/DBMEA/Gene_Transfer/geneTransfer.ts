@@ -11,7 +11,7 @@ import { geneTransferMutation } from "./geneTransferMutation";
 export function geneTransfer(population: Solution[], n_inf: number, i_trans: number): Solution[] {
     //sort the population based on the fitness values
     let sortedPopulation: Solution[] = population.sort((a: Solution, b: Solution) => {
-        return a.fitness() - b.fitness();
+        return a.fitnessValue - b.fitnessValue;
     })
     //divide the sorted population into two parts (superior and inferior part)
     let superiorPopulation: Solution[] = sortedPopulation.slice(0, Math.floor(sortedPopulation.length / 2));
@@ -26,11 +26,12 @@ export function geneTransfer(population: Solution[], n_inf: number, i_trans: num
     }
     //push the created gene transferred population into the sorted population
     geneTransferrredPopulation.map((geneTransferrredPermutation) => {
+        geneTransferrredPermutation.fitness();
         sortedPopulation.push(geneTransferrredPermutation);
     })
     //sort the population
-    sortedPopulation = population.sort((a: Solution, b: Solution) => {
-        return a.fitness() - b.fitness();
+    sortedPopulation = sortedPopulation.sort((a: Solution, b: Solution) => {
+        return a.fitnessValue - b.fitnessValue;
     })
     //return with the best elements (after the operation) of the population
     //the length of the population must remain the same
