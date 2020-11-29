@@ -14,6 +14,8 @@ export class BenchmarkReaderTaillard {
     jobs: Job[] = [];
     machines: Machine[] = [];
     processingTimes: ProcessingTime[] = [];
+    // speeding up lookup with hashmap
+    processingTimesHash: [string, number] = ["", 0];
     //the whole benchmark data (job, machine, processing time) of the whole txt file
     oneFileJobs: Job[][] = [];
     oneFileMachines: Machine[][] = [];
@@ -66,6 +68,12 @@ export class BenchmarkReaderTaillard {
             if (inputDataRows[i].includes("processing times")) {
                 continue;
             }
+
+            // do not process the last empty line
+            if (inputDataRowData[0].trim().length == 0) {
+                break;
+            }
+
             //the processing time section
             for (let j = 0; j < inputDataRowData.length; j++) {
                 let processingTime = new ProcessingTime(actualFileJobs[j], actualFileMachines[actualMachineIndex], Number(inputDataRowData[j]));
@@ -88,16 +96,21 @@ export class BenchmarkReaderTaillard {
         this.jobs = this.oneFileJobs[benchmarkIndex];
         this.machines = this.oneFileMachines[benchmarkIndex];
         this.processingTimes = this.oneFileProcessingTime[benchmarkIndex];
+        for (let i = 0; i < this.processingTimes.length; i++) {
+            //this.processingTimesHash[[Number(this.processingTimes[i].machine.id), Number(this.processingTimes[i].job.id)]] = this.processingTimes[i].processingTime;
+            this.processingTimesHash[this.processingTimes[i].machine.id + " " + this.processingTimes[i].job.id] = this.processingTimes[i].processingTime;
+        }
     }
     public getFileSize(): number {
         return this.oneFileJobs.length;
     }
     public getProcessingTime(job: Job, machine: Machine): number {
-        for (let i = 0; i < this.processingTimes.length; i++) {
+        /*for (let i = 0; i < this.processingTimes.length; i++) {
             if (this.processingTimes[i].job.id == job.id && this.processingTimes[i].machine.id == machine.id) {
                 return this.processingTimes[i].processingTime;
             }
-        }
+        }*/
+        return this.processingTimesHash[machine.id + " " + job.id];
         throw new exception("Invalid job or machine, processing time cannot be returned");
     }
 }
