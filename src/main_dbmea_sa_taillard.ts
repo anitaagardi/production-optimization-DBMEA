@@ -25,39 +25,23 @@ if (myArgs.length == 0) {
     RESULTS_FILE += "benchmarks_dbmea_sa.txt";
 }
 
-
 console.log("number of benchmarks: ", files.length);
-
-
-
-
-process.on('uncaughtException', (error) => {
-    console.log('Error: ', error);
-    process.exit(1);
-});
-
-process.on('unhandledRejection', (error, promise) => {
-    console.log(' We forgot to handle a promise rejection here: ', promise);
-    console.log(' The error was: ', error);
-});
 
 const hyperParameters = {
     dbmea_population: [8],
-    dbmea_terminationCriteria: [3],
+    dbmea_terminationCriteria: [2],
     dbmea_clones: [5],
-    dbmea_infections: [20],
+    dbmea_infections: [40],
     dbmea_segmentLengths: [4],
     dbmea_transferSegmentLengths: [5],
-    dbmea_mortality_rate: [4], //less than the dbmea_population!!!
-    sa_terminationCriteria: [400],
+    dbmea_mortality_rate: [0.05], //less than the dbmea_population!!!
+    sa_terminationCriteria: [200],
     sa_temperature: [1000],
     sa_alpha: [0.1],
-    sa_length: [5],
+    sa_length: [1],
     sa_optNumber: [2] //only 2-opt / 3-opt
 
 }
-
-
 
 const parameterIndexes = [
     Array.from(Array(hyperParameters.dbmea_population.length), (v, i) => i),
@@ -77,8 +61,11 @@ const parameterIndexes = [
 const permutations = Utils.combineArraysRecursively(parameterIndexes);
 
 const benchMarkResults = new BenchmarkResultsReaderTaillard;
+
 setBenchmarkType(BENCHMARK_OPTIONS[1]);
-const results = benchMarkResults.readAll();
+
+benchMarkResults.readAll();
+
 let actualOptimumIndex = 0;
 if (myArgs.length != 0) {
     actualOptimumIndex = benchMarkResults.benchmarkAssignments[argumentBenchmarkName];
@@ -120,6 +107,9 @@ for (const file of files) {
             const sa_optNumber = hyperParameters.sa_optNumber[permutations[i][11]];
             console.log("parameters: ", dbmea_population, dbmea_terminationCriteria, dbmea_clone, dbmea_infection, dbmea_segmentLength, dbmea_transferSegmentLength, sa_terminationCriteria, sa_temperature, sa_alpha, sa_length, sa_optNumber);
 
+            fs.appendFileSync(RESULTS_FILE, benchmarkName + ": parameters" + " " + dbmea_population + " " + dbmea_terminationCriteria + " " + dbmea_clone + " " + dbmea_infection + " " + dbmea_segmentLength + " " +
+                dbmea_transferSegmentLength + " " + sa_terminationCriteria + " " + sa_temperature + " " + sa_alpha + " " + sa_length + " " + sa_optNumber + "\n");
+
             const startTime = process.hrtime();
 
             let dbmeaResultSolution: Solution = dbmea_sa(dbmea_population, dbmea_terminationCriteria, dbmea_clone, dbmea_infection, dbmea_segmentLength, dbmea_transferSegmentLength, dbmea_mortality_rate, sa_terminationCriteria, sa_temperature, sa_alpha, sa_length, sa_optNumber);
@@ -143,7 +133,7 @@ for (const file of files) {
             }
         }
 
-        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + " " + benchmarkOptimum + (bestOptimum == benchmarkOptimum ? " (=)" : "") + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n");
+        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + (bestOptimum == benchmarkOptimum ? " = " : " ")  + benchmarkOptimum + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n\n");
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }

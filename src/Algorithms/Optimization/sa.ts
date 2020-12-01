@@ -1,5 +1,6 @@
 import { exception } from "console";
 import { Solution } from "../../Model/solution";
+import { swapMove } from "../Operators/SA/swapMove";
 import { threeOptMove } from "../Operators/SA/threeOptMove";
 import { twoOptMove } from "../Operators/SA/twoOptMove";
 import { globalRandomGenerator } from "../Permutation/permutationGenerator";
@@ -28,7 +29,7 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
         //length property: in a given length will remain the temperature the same
         for (let l = 0; l < length; l++) {
             if (opt_number == 2) {
-                neighbourSolution = twoOptMove(actualSolution);
+                neighbourSolution = swapMove(actualSolution);
             }
             else if (opt_number == 3) {
                 neighbourSolution = threeOptMove(actualSolution);
@@ -48,7 +49,7 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
                 //if the neighbour is better than the ever best
                 if (deltaBestAndActual < 0) {
                     if (isPrintFitnesses) {
-                        process.stdout.write(bestSolutionFitness + " ");
+                        process.stdout.write("[" + bestSolutionFitness + "] ");
                     }
                     bestSolution.permutation = [...neighbourSolution.permutation];
                     bestSolution.fitnessValue = neighbourSolution.fitnessValue;

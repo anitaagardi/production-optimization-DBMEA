@@ -45,7 +45,7 @@ export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number
     //termination criteria
     while (notImprovedCount < dbmea_termination_criteria) {
         //the mortality of the worst solutions --> creation of new random solutions
-        for (let i = 1; i <= dbmea_mortality_rate; i++) {
+        for (let i = 1; i <= population.length * dbmea_mortality_rate; i++) {
             population[population.length - i] = new Solution();
         }
         /*
@@ -61,21 +61,27 @@ export function dbmea_sa(dbmea_n_ind: number, dbmea_termination_criteria: number
             //twoOpt(population[i]);
             //threeOpt(population[i]);
             population[i] = sa(sa_termination_criteria, sa_temperature, sa_alpha, sa_length, sa_opt_number, population[i]);
+            if(population[i].fitness() < bestSolutionFitness && i > 2) {
+                population = population.slice(0, i + 1);
+                break;
+            }
             process.stdout.write(".");
         }
         //gene transfer
         population = geneTransfer(population, dbmea_n_inf, dbmea_i_trans);
+
         //the gene transfer sorts the population, so the first element will be the best
         let firstSolutionFitness: number = population[0].fitness();
         if (firstSolutionFitness < bestSolutionFitness) {
-            process.stdout.write(bestSolutionFitness + " ");
+            process.stdout.write(firstSolutionFitness + " ");
             bestSolutionFitness = firstSolutionFitness;
             bestSolution.permutation = [...population[0].permutation];
+            bestSolution.fitnessValue = firstSolutionFitness;
             notImprovedCount = 0;
         } else {
             notImprovedCount++;
+            process.stdout.write("(-)");
         }
-
     }
     process.stdout.write("\n");
     return bestSolution;
