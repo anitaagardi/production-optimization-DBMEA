@@ -16,8 +16,8 @@ import { globalRandomGenerator } from "../Permutation/permutationGenerator";
  * @returns {Solution} the best solution created with SA
  */
 export function sa(termination_criteria: number, temperature: number, alpha: number, length: number, opt_number: number, initial_solution: Solution = new Solution(), isPrintFitnesses: boolean = false): Solution {
-    if ((opt_number != 2) && (opt_number != 3)) {
-        throw new exception("Only the 2-opt and 3-opt move is implemented");
+    if ((opt_number != 2) && (opt_number != 3) && (opt_number != 4)) {
+        throw new exception("Only the 2-opt and 3-opt and 4-simpleSwap moves are implemented");
     }
     let actualSolution: Solution = initial_solution;
     let neighbourSolution: Solution = new Solution();
@@ -29,10 +29,11 @@ export function sa(termination_criteria: number, temperature: number, alpha: num
         //length property: in a given length will remain the temperature the same
         for (let l = 0; l < length; l++) {
             if (opt_number == 2) {
-                neighbourSolution = swapMove(actualSolution);
-            }
-            else if (opt_number == 3) {
+                neighbourSolution = twoOptMove(actualSolution);
+            } else if (opt_number == 3) {
                 neighbourSolution = threeOptMove(actualSolution);
+            } else if (opt_number == 4) {
+                neighbourSolution = swapMove(actualSolution);
             }
 
             // calculate fittness if it was not caltulated before

@@ -35,12 +35,11 @@ const hyperParameters = {
     dbmea_segmentLengths: [4],
     dbmea_transferSegmentLengths: [5],
     dbmea_mortality_rate: [0.05], //less than the dbmea_population!!!
-    sa_terminationCriteria: [200],
+    sa_terminationCriteria: [400],
     sa_temperature: [1000],
     sa_alpha: [0.1],
-    sa_length: [1],
-    sa_optNumber: [2] //only 2-opt / 3-opt
-
+    sa_length: [2],
+    sa_optNumber: [4] //only 2-opt / 3-opt / 4-simple swap
 }
 
 const parameterIndexes = [
