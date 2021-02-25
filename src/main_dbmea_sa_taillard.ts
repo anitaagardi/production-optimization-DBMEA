@@ -22,7 +22,11 @@ if (myArgs.length == 0) {
     let indexTai = myArgs[0].indexOf("tai");
     argumentBenchmarkName = myArgs[0].substring(indexTai).replace(".txt", "");
     RESULTS_FILE += argumentBenchmarkName;
-    RESULTS_FILE += "benchmarks_dbmea_sa.txt";
+    if (process.argv[3] === undefined) {
+        RESULTS_FILE += "benchmarks_dbmea_sa.txt";
+    } else{
+        RESULTS_FILE += "benchmarks_dbmea_sa_" + process.argv[3] + ".txt";        
+    }
 }
 
 if (process.argv[3] === undefined) {
