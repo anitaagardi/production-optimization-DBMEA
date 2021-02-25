@@ -25,7 +25,9 @@ if (myArgs.length == 0) {
     RESULTS_FILE += "benchmarks_dbmea_sa.txt";
 }
 
-console.log("number of benchmarks: ", files.length);
+if (process.argv[3] === undefined) {
+    console.log("number of benchmarks: ", files.length);
+}
 
 const hyperParameters = {
     dbmea_population: [8],
@@ -70,6 +72,12 @@ if (myArgs.length != 0) {
     actualOptimumIndex = benchMarkResults.benchmarkAssignments[argumentBenchmarkName];
 }
 
+let selectedBenchMarkIndex = -1;
+if (process.argv[3] !== undefined) {
+    console.log("running benchmark item number: " + process.argv[3]);
+    selectedBenchMarkIndex = Number(process.argv[3]);
+}
+
 const algorithmStartTime = dateFormat(new Date(), " yyyy:mm:dd  HH:MM:ss \n");
 fs.appendFileSync(RESULTS_FILE, "Start time: " + algorithmStartTime);
 for (const file of files) {
@@ -79,6 +87,12 @@ for (const file of files) {
     Solution.benchmarkReaderTaillard.readTheFile(file);
     let fileSize: number = Solution.benchmarkReaderTaillard.getFileSize();
     for (let j = 0; j < fileSize; j++) {
+        // run only one benchmark item
+        if (selectedBenchMarkIndex >= 0 && actualBenchmarkInstanceIndex != selectedBenchMarkIndex) {
+            actualBenchmarkInstanceIndex++;
+            actualOptimumIndex++;
+            continue;
+        }
         Solution.benchmarkReaderTaillard.setOneBenchmark(actualBenchmarkInstanceIndex);
 
         let optimum;
@@ -132,7 +146,7 @@ for (const file of files) {
             }
         }
 
-        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + (bestOptimum == benchmarkOptimum ? " = " : " ")  + benchmarkOptimum + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n\n");
+        fs.appendFileSync(RESULTS_FILE, benchmarkName + ": " + bestOptimum + (bestOptimum == benchmarkOptimum ? " = " : " ") + benchmarkOptimum + " [" + ellapsedTime[0] + " sec] Job sequence: " + optimumJobSequence + "\n\n");
         actualBenchmarkInstanceIndex++;
         actualOptimumIndex++;
     }

@@ -45,6 +45,10 @@ To run only one Taillard dataset, you must specify the file name, for example :
 
 npm run start:dbmea_sa:taillard 1tai20_5.txt
 
+To run only one instance from a file use: (e.g. 5.th test case)
+
+npm run start:dbmea_sa:taillard 1tai20_5.txt 4
+
 To run only one Tanaka dataset, you must specify the directory names ( e.g. n=20 m=3 ), for example :
 
 npm run start:dbmea_sa:tanaka n=20 m=3
