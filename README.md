@@ -17,10 +17,20 @@ For local search, our approach uses the Simulated Annealing instead of the 2-opt
 
 ## Test command for the DBMEA+SA algorithm
 
+0. Clone this repository
 1. Install Node.js from https://nodejs.org/en/
 2. Install dependencies of our project: `npm install`
 3. Run the DBMEA+SA algorithm : `npm run start:dbmea_sa:taillard`
 
+**more options:**
+
+If you want to run only one Taillard dataset, you must specify the file name, for example:
+
+`npm run start:dbmea_sa:taillard 1tai20_5.txt`
+
+To run only one instance from a file use: (e.g. 5.th test case)
+
+`npm run start:dbmea_sa:taillard 1tai20_5.txt 4`
 
 ## Test results
 We used the Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is 20-500, the number of machines is 5-20. In the table, n x m represents the job x machine number. We also compared it with the results published by other authors, which are the following algorithms: Invasive Weed Optimization (IWO) [5], HGSA Hybrid Genetic Simulated Annealing (HGSA) [6], Hybrid Genetic Algorithm (HGA) [7], Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
@@ -158,72 +168,3 @@ We used the Taillard [4] benchmark data set to validate our approach. For data s
 [6] Wei, H., Li, S., Jiang, H., Hu, J., & Hu, J. (2018). Hybrid genetic simulated annealing algorithm for improved flow shop sche-duling with makespan criterion. Applied Sciences, 8(12), 2621.  
 [7] Tseng, L. Y., & Lin, Y. T. (2010). A hybrid genetic algorithm for no-wait flowshop scheduling problem. International Journal of Production Economics, 128(1), 144-152.  
 [8] Qu, C., Fu, Y., Yi, Z., & Tan, J. (2018). Solutions to no-wait flow shop scheduling problem using the flower pollination algorithm based on the hormone modulation mechanism. Complexity, 2018.  
-
-------------------------------------------------------------------------------------------------------------------------------------
-# production-optimization-DBMEA
-Problem: TOTAL TARDINESS PROBLEM ON IDENTICAL PARALLEL MACHINES
-Algorithm: Dicrete Bacterial Memetic Evolutionary Algorithm
-Comparision algorithms: Genetic Algorithm, Simulated Annealing
-Benchmark dataset: https://sites.google.com/site/shunjitanaka/pmtt
-Paper: [TA08] S. Tanaka and M. Araki. A branch-and-bound algorithm with Lagrangian relaxation to minimize total tardiness on identical parallel machines. International Journal of Production Economics 113(5), p. 446-458, 2008. DOI: 10.1016/j.ijpe.2007.10.006
-
-npm install
-
-Command:
-
-GA (running all dataset):
-
-Tanaka: npm run start:ga:tanaka
-
-Taillard:npm run start:ga:taillard
- 
-SA (running all dataset):
-
-
-Tanaka: npm run start:sa:tanaka
-
-Taillard:npm run start:sa:taillard
-
-
-DBMEA (running all dataset):
-
-
-Tanaka: npm run start:dbmea:tanaka
-
-Taillard:npm run start:dbmea:taillard
-
-
-DBMEA_SA (running all dataset):
-
-
-Tanaka: npm run start:dbmea_sa:tanaka
-
-Taillard: npm run start:dbmea_sa:taillard
-
-
-----------------------------------------------------
-
-To run only one Taillard dataset, you must specify the file name, for example :
-
-npm run start:dbmea_sa:taillard 1tai20_5.txt
-
-To run only one instance from a file use: (e.g. 5.th test case)
-
-npm run start:dbmea_sa:taillard 1tai20_5.txt 4
-
-To run only one Tanaka dataset, you must specify the directory names ( e.g. n=20 m=3 ), for example :
-
-npm run start:dbmea_sa:tanaka n=20 m=3
-
-----------------------------------------------------
-
-Test:
-run all test:
-npm run test
-
-----------------------------------------------------
-
-The benchmark instances are in the 'benchmark_instances/Taillard'  and 'benchmark_instances/Tanaka' folder.
-The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Taillard/results' folder.
-
-        
