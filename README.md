@@ -33,9 +33,13 @@ To run only one instance from a file use: (e.g. 5.th test case)
 `npm run start:dbmea_sa:taillard 1tai20_5.txt 4`
 
 ## Test results
-We used the Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is 20-500, number of machines is 5-20. The table below shows that: n x m where m represents the job x machine number. We also compared it with the results published by other authors, which are as follows: Invasive Weed Optimization (IWO) [5], HGSA Hybrid Genetic Simulated Annealing (HGSA) [6], Hybrid Genetic Algorithm (HGA) [7], Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
+We used Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is between 20 and 500, number of machines is between 5 and 20. We also compared it with the results published by other authors, which are as follows: 
+  * Invasive Weed Optimization (IWO) [5], 
+  * HGSA Hybrid Genetic Simulated Annealing (HGSA) [6] 
+  * Hybrid Genetic Algorithm (HGA) [7], 
+  * Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
 
- | Instance | n x m | Best known | DBMEA + SA | IWO [5] | HGSA [6] | HGA [7] | HMM-PFA [8] | 
+ | Instance | Jobs x Machines | Best known | DBMEA + SA | IWO [5] | HGSA [6] | HGA [7] | HMM-PFA [8] | 
  |----------|-------|------------|------------|---------|----------|---------|-------------|  
  | Ta001 | 20 x 5 | 1278 | 1283 | 1389 | 1324 | 1449 | 1486 | 
  | Ta002 | 20 x 5 | 1359 | 1360 | - | 1442 | 1460 | 1528 | 
