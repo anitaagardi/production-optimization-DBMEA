@@ -150,14 +150,14 @@ We used the Taillard [4] benchmark data set to validate our approach. For data s
 
 
 ## References
-[1] Johnson, S. M. (1954). Optimal two‐and three‐stage production schedules with setup times included. Naval research logistics quarterly, 1(1), 61-68. 
-[2] Kóczy, L. T., Földesi, P., & Tüű-Szabó, B. (2018). Enhanced discrete bacterial memetic evolutionary algorithm-An efficacious metaheuristic for the traveling salesman optimization. Information Sciences, 460, 389-400.
-[3] Malek, M., Guruswamy, M., Pandya, M., & Owens, H. (1989). Serial and parallel simulated annealing and tabu search algorithms for the traveling salesman problem. Annals of Operations Research, 21(1), 59-84.
-[4] E. Taillard, "Benchmarks for basic scheduling problems", EJOR 64(2):278-285, 1993
-[5] Zhou, Y., Chen, H., & Zhou, G. (2014). Invasive weed optimization algorithm for optimization no-idle flow shop scheduling problem. Neurocomputing, 137, 285-292. 
-[6] Wei, H., Li, S., Jiang, H., Hu, J., & Hu, J. (2018). Hybrid genetic simulated annealing algorithm for improved flow shop sche-duling with makespan criterion. Applied Sciences, 8(12), 2621. 
-[7] Tseng, L. Y., & Lin, Y. T. (2010). A hybrid genetic algorithm for no-wait flowshop scheduling problem. International Journal of Production Economics, 128(1), 144-152. 
-[8] Qu, C., Fu, Y., Yi, Z., & Tan, J. (2018). Solutions to no-wait flow shop scheduling problem using the flower pollination algorithm based on the hormone modulation mechanism. Complexity, 2018. 
+[1] Johnson, S. M. (1954). Optimal two‐and three‐stage production schedules with setup times included. Naval research logistics quarterly, 1(1), 61-68.  
+[2] Kóczy, L. T., Földesi, P., & Tüű-Szabó, B. (2018). Enhanced discrete bacterial memetic evolutionary algorithm-An efficacious metaheuristic for the traveling salesman optimization. Information Sciences, 460, 389-400.  
+[3] Malek, M., Guruswamy, M., Pandya, M., & Owens, H. (1989). Serial and parallel simulated annealing and tabu search algorithms for the traveling salesman problem. Annals of Operations Research, 21(1), 59-84.  
+[4] E. Taillard, "Benchmarks for basic scheduling problems", EJOR 64(2):278-285, 1993  
+[5] Zhou, Y., Chen, H., & Zhou, G. (2014). Invasive weed optimization algorithm for optimization no-idle flow shop scheduling problem. Neurocomputing, 137, 285-292.  
+[6] Wei, H., Li, S., Jiang, H., Hu, J., & Hu, J. (2018). Hybrid genetic simulated annealing algorithm for improved flow shop sche-duling with makespan criterion. Applied Sciences, 8(12), 2621.  
+[7] Tseng, L. Y., & Lin, Y. T. (2010). A hybrid genetic algorithm for no-wait flowshop scheduling problem. International Journal of Production Economics, 128(1), 144-152.  
+[8] Qu, C., Fu, Y., Yi, Z., & Tan, J. (2018). Solutions to no-wait flow shop scheduling problem using the flower pollination algorithm based on the hormone modulation mechanism. Complexity, 2018.  
 
 ------------------------------------------------------------------------------------------------------------------------------------
 # production-optimization-DBMEA
