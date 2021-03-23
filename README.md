@@ -1,17 +1,17 @@
 # Flow Shop Scheduling Problem optimization with Discrete Bacterial Memetic Evolutionary Algorithm and Simulated Annealing
 ## Flow Shop Scheduling Problem
 
-Flow Shop Scheduling Problem [1]  is an optimization problem, where the numbers of jobs and machines are given. The processing times of the jobs on each machine are also known in advance. Each job must be assigned to all machines.  A machine processes a single job at a time. The objective is the minimization of the makespan of the job sequence.
+Flow Shop Scheduling Problem [1] is an optimization problem, where the number of jobs and machines are given. Processing times of the jobs on each machine are also known in advance. Each job must be assigned to all machines. Each machine processes a single job at a time. The objective function is to minimize of makespan of all jobs.
 
 ## Discrete Bacterial Memetic Evolutionary Algorithm
-The Discrete Bacterial Memetic Evolutionary Algorithm (DBMEA) [2] is a population based heuristic optimization algorithm. After generating the initial population, it performs the following operations until the stop condition is not met: 
+Discrete Bacterial Memetic Evolutionary Algorithm (DBMEA) [2] is a population based heuristic optimization algorithm. After generating the initial population, it performs the following operations until __stop condition__ is met: 
 
 1. Bacterial Mutation
 2. Local Search
 3. Gene transfer
 
 ## Simulated Annealing Algorithm
-The Simulated Annealing algorithm [3] operates on a single solution. It creates a neighbor of the current solution, and if it is better than the current solution, it accepts it as current. If not better, the algorithm will only accept it with a certain probability.
+Simulated Annealing algorithm [3] operates on a single solution. It creates a neighbor of the current solution, and if it is better than the current solution, it accepts it as current. If not better, the algorithm will only accept it with a certain probability.
 
 For local search, our approach uses the Simulated Annealing instead of the 2-opt 3-opt technique, therefore, we gave it the following name: Discrete Bacterial Memetic Evolutionary Algorithm with Simulated Annealing (DBMEA+SA).
 
@@ -22,7 +22,7 @@ For local search, our approach uses the Simulated Annealing instead of the 2-opt
 2. Install dependencies of our project: `npm install`
 3. Run the DBMEA+SA algorithm : `npm run start:dbmea_sa:taillard`
 
-**more options:**
+**advanced options:**
 
 If you want to run only one Taillard dataset, you must specify the file name, for example:
 
@@ -33,7 +33,7 @@ To run only one instance from a file use: (e.g. 5.th test case)
 `npm run start:dbmea_sa:taillard 1tai20_5.txt 4`
 
 ## Test results
-We used the Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is 20-500, the number of machines is 5-20. In the table, n x m represents the job x machine number. We also compared it with the results published by other authors, which are the following algorithms: Invasive Weed Optimization (IWO) [5], HGSA Hybrid Genetic Simulated Annealing (HGSA) [6], Hybrid Genetic Algorithm (HGA) [7], Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
+We used the Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is 20-500, number of machines is 5-20. The table below shows that: n x m where m represents the job x machine number. We also compared it with the results published by other authors, which are as follows: Invasive Weed Optimization (IWO) [5], HGSA Hybrid Genetic Simulated Annealing (HGSA) [6], Hybrid Genetic Algorithm (HGA) [7], Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
 
  | Instance | n x m | Best known | DBMEA + SA | IWO [5] | HGSA [6] | HGA [7] | HMM-PFA [8] | 
  |----------|-------|------------|------------|---------|----------|---------|-------------|  
