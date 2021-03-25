@@ -1,31 +1,45 @@
 # Flow Shop Scheduling Problem optimization with Discrete Bacterial Memetic Evolutionary Algorithm and Simulated Annealing
 ## Flow Shop Scheduling Problem
 
-Flow Shop Scheduling Problem [1]  is an optimization problem, where the numbers of jobs and machines are given. The processing times of the jobs on each machine are also known in advance. Each job must be assigned to all machines.  A machine processes a single job at a time. The objective is the minimization of the makespan of the job sequence.
+Flow Shop Scheduling Problem [1] is an optimization problem, where the number of jobs and machines are given. Processing times of the jobs on each machine are also known in advance. Each job must be assigned to all machines. Each machine processes a single job at a time. The objective function is to minimize of makespan of all jobs.
 
 ## Discrete Bacterial Memetic Evolutionary Algorithm
-The Discrete Bacterial Memetic Evolutionary Algorithm (DBMEA) [2] is a population based heuristic optimization algorithm. After generating the initial population, it performs the following operations until the stop condition is not met: 
+Discrete Bacterial Memetic Evolutionary Algorithm (DBMEA) [2] is a population based heuristic optimization algorithm. After generating the initial population, it performs the following operations until __stop condition__ is met: 
 
 1. Bacterial Mutation
 2. Local Search
 3. Gene transfer
 
 ## Simulated Annealing Algorithm
-The Simulated Annealing algorithm [3] operates on a single solution. It creates a neighbor of the current solution, and if it is better than the current solution, it accepts it as current. If not better, the algorithm will only accept it with a certain probability.
+Simulated Annealing algorithm [3] operates on a single solution. It creates a neighbor of the current solution, and if it is better than the current solution, it accepts it as current. If not better, the algorithm will only accept it with a certain probability.
 
 For local search, our approach uses the Simulated Annealing instead of the 2-opt 3-opt technique, therefore, we gave it the following name: Discrete Bacterial Memetic Evolutionary Algorithm with Simulated Annealing (DBMEA+SA).
 
 ## Test command for the DBMEA+SA algorithm
 
+0. Clone this repository
 1. Install Node.js from https://nodejs.org/en/
 2. Install dependencies of our project: `npm install`
 3. Run the DBMEA+SA algorithm : `npm run start:dbmea_sa:taillard`
 
+**advanced options:**
+
+If you want to run only one Taillard dataset, you must specify the file name, for example:
+
+`npm run start:dbmea_sa:taillard 1tai20_5.txt`
+
+To run only one instance from a file use: (e.g. 5.th test case)
+
+`npm run start:dbmea_sa:taillard 1tai20_5.txt 4`
 
 ## Test results
-We used the Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is 20-500, the number of machines is 5-20. In the table, n x m represents the job x machine number. We also compared it with the results published by other authors, which are the following algorithms: Invasive Weed Optimization (IWO) [5], HGSA Hybrid Genetic Simulated Annealing (HGSA) [6], Hybrid Genetic Algorithm (HGA) [7], Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
+We used Taillard [4] benchmark data set to validate our approach. For data series, the number of jobs is between 20 and 500, number of machines is between 5 and 20. We also compared it with the results published by other authors, which are as follows: 
+  * Invasive Weed Optimization (IWO) [5], 
+  * HGSA Hybrid Genetic Simulated Annealing (HGSA) [6] 
+  * Hybrid Genetic Algorithm (HGA) [7], 
+  * Hormone Modulation Mechanism Flower Pollination Algorithm (HMM-PFA) [8].
 
- | Instance | n x m | Best known | DBMEA + SA | IWO [5] | HGSA [6] | HGA [7] | HMM-PFA [8] | 
+ | Instance | Jobs x Machines | Best known | DBMEA + SA | IWO [5] | HGSA [6] | HGA [7] | HMM-PFA [8] | 
  |----------|-------|------------|------------|---------|----------|---------|-------------|  
  | Ta001 | 20 x 5 | 1278 | 1283 | 1389 | 1324 | 1449 | 1486 | 
  | Ta002 | 20 x 5 | 1359 | 1360 | - | 1442 | 1460 | 1528 | 
@@ -158,72 +172,3 @@ We used the Taillard [4] benchmark data set to validate our approach. For data s
 [6] Wei, H., Li, S., Jiang, H., Hu, J., & Hu, J. (2018). Hybrid genetic simulated annealing algorithm for improved flow shop sche-duling with makespan criterion. Applied Sciences, 8(12), 2621.  
 [7] Tseng, L. Y., & Lin, Y. T. (2010). A hybrid genetic algorithm for no-wait flowshop scheduling problem. International Journal of Production Economics, 128(1), 144-152.  
 [8] Qu, C., Fu, Y., Yi, Z., & Tan, J. (2018). Solutions to no-wait flow shop scheduling problem using the flower pollination algorithm based on the hormone modulation mechanism. Complexity, 2018.  
-
-------------------------------------------------------------------------------------------------------------------------------------
-# production-optimization-DBMEA
-Problem: TOTAL TARDINESS PROBLEM ON IDENTICAL PARALLEL MACHINES
-Algorithm: Dicrete Bacterial Memetic Evolutionary Algorithm
-Comparision algorithms: Genetic Algorithm, Simulated Annealing
-Benchmark dataset: https://sites.google.com/site/shunjitanaka/pmtt
-Paper: [TA08] S. Tanaka and M. Araki. A branch-and-bound algorithm with Lagrangian relaxation to minimize total tardiness on identical parallel machines. International Journal of Production Economics 113(5), p. 446-458, 2008. DOI: 10.1016/j.ijpe.2007.10.006
-
-npm install
-
-Command:
-
-GA (running all dataset):
-
-Tanaka: npm run start:ga:tanaka
-
-Taillard:npm run start:ga:taillard
- 
-SA (running all dataset):
-
-
-Tanaka: npm run start:sa:tanaka
-
-Taillard:npm run start:sa:taillard
-
-
-DBMEA (running all dataset):
-
-
-Tanaka: npm run start:dbmea:tanaka
-
-Taillard:npm run start:dbmea:taillard
-
-
-DBMEA_SA (running all dataset):
-
-
-Tanaka: npm run start:dbmea_sa:tanaka
-
-Taillard: npm run start:dbmea_sa:taillard
-
-
-----------------------------------------------------
-
-To run only one Taillard dataset, you must specify the file name, for example :
-
-npm run start:dbmea_sa:taillard 1tai20_5.txt
-
-To run only one instance from a file use: (e.g. 5.th test case)
-
-npm run start:dbmea_sa:taillard 1tai20_5.txt 4
-
-To run only one Tanaka dataset, you must specify the directory names ( e.g. n=20 m=3 ), for example :
-
-npm run start:dbmea_sa:tanaka n=20 m=3
-
-----------------------------------------------------
-
-Test:
-run all test:
-npm run test
-
-----------------------------------------------------
-
-The benchmark instances are in the 'benchmark_instances/Taillard'  and 'benchmark_instances/Tanaka' folder.
-The best known results are in the 'benchmark_instances/Tanaka/results' and  'benchmark_instances/Taillard/results' folder.
-
-        
